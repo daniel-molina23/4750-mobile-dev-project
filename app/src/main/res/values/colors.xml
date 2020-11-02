@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9013FE</color>
+    <color name="colorPrimaryDark">#6A1B9A</color>
+    <color name="colorAccent">#9013FE</color>
+    <color name="calRemainBackground">#EBE7D0</color>
+    <color name="blackText">#000000</color>
+    <color name="addText">#3F583E</color>
+
+</resources>

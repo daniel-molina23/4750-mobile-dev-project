@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fitness App</string>
+    <string name="name">Name</string>
+    <string name="sex">Sex</string>
+    <string name="weight">Weight</string>
+    <string name="age">Age</string>
+</resources>
