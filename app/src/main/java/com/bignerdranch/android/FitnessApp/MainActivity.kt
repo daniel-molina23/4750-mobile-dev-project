@@ -5,23 +5,28 @@ import android.os.Bundle
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
+
+    //Will Contain all the info about the person
+    private var person: Person = Person("","","",0,0)
+    //Used to Reference the Widgets in the layout file
+    private lateinit var firstNameInput: EditText
+    private lateinit var lastNameInput: EditText
+    private lateinit var sexSpinner: Spinner
+    private lateinit var weightInput: EditText
+    private lateinit var ageInput: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // not making class because one one person
-        var name = ""
-        var sex = ""
-        var tempWeight = "" //temporary variable to ensure correct format prior to append to 'weight' var
-        var weight = 0
-        var tempAge = ""    //temporary variable to ensure correct format prior to append to 'age' var
-        var age = 0
+        //Initializing Data Fields
+        firstNameInput = findViewById(R.id.first_name)
+        lastNameInput = findViewById(R.id.last_name)
+        sexSpinner = findViewById(R.id.sex_spinner)
+        weightInput = findViewById(R.id.et_weight)
+        ageInput = findViewById(R.id.et_age)
 
 
-        var nameInput : EditText = findViewById(R.id.et_name)
-        var sexSpinner : Spinner = findViewById(R.id.sex_spinner)
-        var weightInput : EditText  = findViewById(R.id.et_weight)
-        var ageInput : EditText = findViewById(R.id.et_age)
 
         //adapter for the spinner to respond to selection
         ArrayAdapter.createFromResource(
@@ -36,35 +41,44 @@ class MainActivity : AppCompatActivity() {
         var createProfile : Button = findViewById(R.id.createProfile)
         createProfile.setOnClickListener {
 
+            var tempWeight = "" //temporary variable to ensure correct format prior to append to 'weight' var
+            var tempAge = ""    //temporary variable to ensure correct format prior to append to 'age' var
 
-            name = nameInput.getText().toString()
-            sex = sexSpinner.selectedItem.toString()
+            //Saving the Users First and Last Name
+            person.firstName = firstNameInput.getText().toString()
+            person.lastName = lastNameInput.getText().toString()
+
+            //Getting the Users Sex
+            person.sex =  sexSpinner.selectedItem.toString()
+
+            //Getting the Users Weight and Age as well as ensuring correct input
             tempWeight = weightInput.text.toString()
             tempAge = ageInput.text.toString()
 
             var weightRegex = Regex("[1-9][0-9]{1,2}")
 
             if (weightRegex.matches(tempWeight)) {
-                weight = Integer.valueOf(tempWeight)
+                person.weight = Integer.valueOf(tempWeight)
             }else{
-                weight = 0 //ensure original value
+                person.weight = 0 //ensure original value
             }
 
             var ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
 
             if (ageRegex.matches(tempAge)) {
-                age = Integer.valueOf(tempAge)
+                person.age = Integer.valueOf(tempAge)
             }else{
-                age = 0 //ensure original value
+                person.age = 0 //ensure original value
             }
 
             //TODO - make the name, sex, age, and weight to save locally
-            if(name != "" && sex != "Select Sex" && weight != 0 && age != 0) {
+            //IF we got valid Input
+            if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
 
-                Toast.makeText(this, "Name, $name\n" +
-                        " Sex, $sex\n" +
-                        "Weight, $weight\n" +
-                        "Age, $age", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "First Name, ${person.firstName}\nLast Name ${person.lastName}\n" +
+                        " Sex, $person.sex\n" +
+                        "Weight, ${person.weight}\n" +
+                        "Age, ${person.age}", Toast.LENGTH_SHORT)
                     .show()
             }
             else {

@@ -56,14 +56,36 @@
                     android:text="Create your profile"
                     android:textColor="#7A8089"
                     android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_name"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name"
-                    android:textColor="#363A43"
-                    android:textColorHint="#7A8089" />
+                    >
+
+                    <EditText
+                        android:id="@+id/first_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="         First name         "
+                        android:textColor="#363A43"
+                        android:textColorHint="#7A8089"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/last_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="         Last name         "
+                        android:textColor="#363A43"
+                        android:textColorHint="#7A8089"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/first_name"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Spinner
                     android:id="@+id/sex_spinner"
