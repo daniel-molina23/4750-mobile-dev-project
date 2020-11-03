@@ -1,15 +1,8 @@
 package com.bignerdranch.android.FitnessApp
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,50 +12,64 @@ class MainActivity : AppCompatActivity() {
         // not making class because one one person
         var name = ""
         var sex = ""
-        var tempWeight = ""
+        var tempWeight = "" //temporary variable to ensure correct format prior to append to 'weight' var
         var weight = 0
-        var tempAge = ""
+        var tempAge = ""    //temporary variable to ensure correct format prior to append to 'age' var
         var age = 0
 
 
         var nameInput : EditText = findViewById(R.id.et_name)
-        var sexInput : EditText = findViewById(R.id.et_sex)
+        var sexSpinner : Spinner = findViewById(R.id.sex_spinner)
         var weightInput : EditText  = findViewById(R.id.et_weight)
         var ageInput : EditText = findViewById(R.id.et_age)
 
+        //adapter for the spinner to respond to selection
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.sex_array,
+            android.R.layout.simple_spinner_item,
+        ).also {adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            sexSpinner.adapter = adapter
+        }
 
         var createProfile : Button = findViewById(R.id.createProfile)
         createProfile.setOnClickListener {
 
 
             name = nameInput.getText().toString()
-            sex = sexInput.getText().toString()
-            tempWeight = weightInput.getText().toString()
+            sex = sexSpinner.selectedItem.toString()
+            tempWeight = weightInput.text.toString()
             tempAge = ageInput.text.toString()
 
             var weightRegex = Regex("[1-9][0-9]{1,2}")
 
             if (weightRegex.matches(tempWeight)) {
                 weight = Integer.valueOf(tempWeight)
+            }else{
+                weight = 0 //ensure original value
             }
 
             var ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
 
             if (ageRegex.matches(tempAge)) {
                 age = Integer.valueOf(tempAge)
+            }else{
+                age = 0 //ensure original value
             }
 
-
-            //TODO fix variable reset if wrong info
-            if(name != "" && sex != "" && weight != 0 && age != 0) {
+            //TODO - make the name, sex, age, and weight to save locally
+            if(name != "" && sex != "Select Sex" && weight != 0 && age != 0) {
 
                 Toast.makeText(this, "Name, $name\n" +
                         " Sex, $sex\n" +
                         "Weight, $weight\n" +
                         "Age, $age", Toast.LENGTH_SHORT)
                     .show()
-            } else {
-                Toast.makeText(this, "User profile is required to use the app"
+            }
+            else {
+                Toast.makeText(this, "User profile is required to use the app\n"
+                    + "1 or more fields are incorrect!"
                     , Toast.LENGTH_SHORT).show()
             }
 

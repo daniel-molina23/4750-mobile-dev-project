@@ -9,15 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizQuestionsActivity">
-            //android:screenOrientation="portrait>   THIS COMMENTED OUT CAUSE OF ERROR
-        </activity>
         <activity
             android:name="com.bignerdranch.android.FitnessApp.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="adjustResize">
-            // this adjust for the keyboard to pop up
+            <!-- this adjust for the keyboard to pop up-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

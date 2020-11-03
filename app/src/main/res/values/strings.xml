@@ -2,6 +2,13 @@
     <string name="app_name">Fitness App</string>
     <string name="name">Name</string>
     <string name="sex">Sex</string>
+    <string-array name="sex_array">
+        <item>Select Sex</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
     <string name="weight">Weight</string>
     <string name="age">Age</string>
+
 </resources>
