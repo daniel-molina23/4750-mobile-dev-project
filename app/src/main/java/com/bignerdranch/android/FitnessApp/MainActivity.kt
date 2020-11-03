@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
 
                 Toast.makeText(this, "First Name, ${person.firstName}\nLast Name ${person.lastName}\n" +
-                        " Sex, $person.sex\n" +
+                        "Sex, ${person.sex}\n" +
                         "Weight, ${person.weight}\n" +
                         "Age, ${person.age}", Toast.LENGTH_SHORT)
                     .show()
