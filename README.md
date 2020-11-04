@@ -1,5 +1,5 @@
 # 4750-mobile-dev-project
-test
+
 This repo is meant to store our project generated from the CS 4750 class.
 
 If you are adding a new feature, make sure to use a seperate branch. Branches are used so we don't interfere with each other's code. It allows us to work simultaneously on different things and avoids collisions.
