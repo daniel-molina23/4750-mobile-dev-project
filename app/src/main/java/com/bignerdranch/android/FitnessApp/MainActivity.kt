@@ -30,12 +30,6 @@ class MainActivity : AppCompatActivity() {
         weightInput = findViewById(R.id.et_weight)
         ageInput = findViewById(R.id.et_age)
 
-        //Initializing to default values for debugging purposes
-        firstNameInput.setText("Jose")
-        lastNameInput.setText("C")
-        weightInput.setText("160")
-        ageInput.setText("22")
-
 
         //adapter for the spinner to respond to selection
         ArrayAdapter.createFromResource(
