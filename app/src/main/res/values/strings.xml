@@ -6,7 +6,6 @@
         <item>Select Sex</item>
         <item>Male</item>
         <item>Female</item>
-        <item>Other</item>
     </string-array>
     <string name="weight">Weight</string>
     <string name="age">Age</string>

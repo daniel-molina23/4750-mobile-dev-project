@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,18 +21,36 @@
             android:orientation="horizontal"
             android:background="@drawable/default_option_border_bg"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
             >
 
-            <TextView
-                android:id="@+id/bmrTotal"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0000\nGoal"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:textColor="@color/blackText"
-                android:textSize="20dp"
-                android:paddingBottom="15dp"
-                />
+                >
+
+                <TextView
+                    android:id="@+id/bmrTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000"
+                    android:gravity="center"
+                    android:textColor="@color/blackText"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goal"
+                    android:textSize="20dp"
+                    android:textColor="@color/blackText"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,16 +61,33 @@
                 android:padding="2dp"
                 />
 
-            <TextView
-                android:id="@+id/foodCalEntered"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0000\nFood"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:textColor="@color/blackText"
-                android:textSize="20dp"
-                android:padding="2dp"
-                />
+                >
+
+                <TextView
+                    android:id="@+id/foodCalEntered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000"
+                    android:gravity="center"
+                    android:textColor="@color/blackText"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Food"
+                    android:textSize="20dp"
+                    android:textColor="@color/blackText"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,15 +98,34 @@
                 android:padding="2dp"
                 />
 
-            <TextView
-                android:id="@+id/exerciseToBeEntered"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0000\nExercise"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:textSize="20dp"
-                android:padding="2dp"
-                />
+                android:paddingRight="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/exerciseToBeEntered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000"
+                    android:textColor="@color/blackText"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Exercise"
+                    android:textSize="20dp"
+                    android:textColor="@color/blackText"
+                    />
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,15 +136,34 @@
                 android:padding="2dp"
                 />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                >
+
             <TextView
                 android:id="@+id/remainingCal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0000\nRemaining"
+                android:text="0000"
+                android:textColor="@color/blackText"
                 android:gravity="center"
                 android:textSize="20dp"
-                android:padding="2dp"
+
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remaining"
+                android:textSize="20dp"
+                android:textColor="@color/blackText"
+                />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -160,17 +233,16 @@
             tools:text="Add Exercise"
             />
 
-
         <EditText
             android:id="@+id/notes_for_day"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
             android:background="@drawable/default_option_border_bg"
             android:ems="10"
             android:hint="Notes From The Day"
             android:padding="10dp"
             android:gravity="top"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textMultiLine"
             />
 
         <LinearLayout
@@ -184,7 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_btn"
                 android:text="Main Menu"
                 android:textColor="@android:color/white"
@@ -198,11 +270,11 @@
             android:id="@+id/btnDatePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Select Date"/>
-
-
-
+            android:layout_marginTop="5dp"
+            android:textColor="@color/blackText"
+            android:textStyle="bold"
+            android:text="Select Date" />
 
     </LinearLayout>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

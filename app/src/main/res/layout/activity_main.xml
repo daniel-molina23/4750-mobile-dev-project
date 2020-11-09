@@ -57,6 +57,8 @@
                     android:text="Create your profile"
                     android:textColor="#7A8089"
                     android:textSize="16sp" />
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,8 +121,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@color/colorPrimary"
                     android:text="Create Profile"
+                    android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
                     android:textSize="18sp">
 
