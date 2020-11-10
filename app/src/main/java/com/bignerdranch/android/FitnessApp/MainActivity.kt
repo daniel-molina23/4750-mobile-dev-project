@@ -3,6 +3,7 @@ package com.bignerdranch.android.FitnessApp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.widget.*
 
 //User Defined Integer that is sent to the child activity and then received back by the parent activity
@@ -21,6 +22,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(isProfileCreated()){
+            //if profile Already Created, go to next activity and close this one
+            goToNextActivity()
+        }
+
+
         setContentView(R.layout.sign_in_display)
 
         //Initializing Data Fields
@@ -78,10 +86,15 @@ class MainActivity : AppCompatActivity() {
             //IF we got valid Input
             if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
 
-                //Switching to the other Activity
-                val intent = Intent(this@MainActivity, FitnessDayActivity::class.java)
-                startActivity(intent)
-                finish() //Killing it so that the activity dies after it switches
+                //make the ProfileManager Persist through
+                ProfileManager.setStoredFirstName(applicationContext, person.firstName)
+                ProfileManager.setStoredLastName(applicationContext, person.lastName)
+                ProfileManager.setStoredSex(applicationContext, person.sex)
+                ProfileManager.setStoredUserWeight(applicationContext, person.weight)
+                ProfileManager.setStoredUserAge(applicationContext, person.age)
+
+                //Goes to the next activity since profile was successfully created
+               goToNextActivity()
             }
             else {
                 Toast.makeText(this, "User profile is required to use the app\n"
@@ -89,5 +102,22 @@ class MainActivity : AppCompatActivity() {
                     , Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun goToNextActivity(){
+        //Switching to the other Activity
+        val intent = Intent(this@MainActivity, FitnessDayActivity::class.java)
+        startActivity(intent)
+        finish() //Killing it so that the activity dies after it switches
+    }
+
+    private fun isProfileCreated() : Boolean{
+        val firstName = ProfileManager.getStoredFirstName(applicationContext)
+        val lastName = ProfileManager.getStoredLastName(applicationContext)
+        val sex = ProfileManager.getStoredSex(applicationContext)
+        val weight = ProfileManager.getStoredUserWeight(applicationContext)
+        val age = ProfileManager.getStoredUserAge(applicationContext)
+
+        return (firstName != "" && lastName != "" && sex != "Select Sex" && weight != 0 && age != 0)
     }
 }

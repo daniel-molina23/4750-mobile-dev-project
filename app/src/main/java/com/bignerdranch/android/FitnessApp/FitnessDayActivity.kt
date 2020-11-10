@@ -22,6 +22,8 @@ class FitnessDayActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
+        val fitnessDayId = intent.getSerializableExtra(ARG_FITNESS_DAY_ID)
+
         //Initializing the Widgets
         addFoodTextView = findViewById(R.id.add_food)
         addExerciseTextView = findViewById(R.id.add_exercise)
@@ -53,7 +55,7 @@ class FitnessDayActivity : AppCompatActivity()
             }
 
             //figure out how to bundle up
-            return ncifnawio
+//            return ncifnawio
         }
     }
 }
