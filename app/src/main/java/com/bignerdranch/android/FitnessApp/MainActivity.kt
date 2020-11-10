@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.sign_in_display)
 
         //Initializing Data Fields
         firstNameInput = findViewById(R.id.first_name)
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
 
                 //Switching to the other Activity
-                val intent = Intent(this@MainActivity, MenuActivity::class.java)
+                val intent = Intent(this@MainActivity, FitnessDayActivity::class.java)
                 startActivity(intent)
                 finish() //Killing it so that the activity dies after it switches
             }
