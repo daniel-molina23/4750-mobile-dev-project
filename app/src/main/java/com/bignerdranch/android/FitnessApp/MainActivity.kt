@@ -1,8 +1,13 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.widget.*
+
+//User Defined Integer that is sent to the child activity and then received back by the parent activity
+private const val REQUEST_CODE_MENU = 0
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +22,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        if(isProfileCreated()){
+            //if profile Already Created, go to next activity and close this one
+            goToNextActivity()
+        }
+
+
+        setContentView(R.layout.sign_in_display)
 
         //Initializing Data Fields
         firstNameInput = findViewById(R.id.first_name)
@@ -25,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         sexSpinner = findViewById(R.id.sex_spinner)
         weightInput = findViewById(R.id.et_weight)
         ageInput = findViewById(R.id.et_age)
-
 
 
         //adapter for the spinner to respond to selection
@@ -37,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             sexSpinner.adapter = adapter
         }
+
 
         var createProfile : Button = findViewById(R.id.createProfile)
         createProfile.setOnClickListener {
@@ -70,24 +82,42 @@ class MainActivity : AppCompatActivity() {
             }else{
                 person.age = 0 //ensure original value
             }
-
             //TODO - make the name, sex, age, and weight to save locally
             //IF we got valid Input
             if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
 
-                Toast.makeText(this, "First Name, ${person.firstName}\nLast Name ${person.lastName}\n" +
-                        "Sex, ${person.sex}\n" +
-                        "Weight, ${person.weight}\n" +
-                        "Age, ${person.age}", Toast.LENGTH_SHORT)
-                    .show()
+                //make the ProfileManager Persist through
+                ProfileManager.setStoredFirstName(applicationContext, person.firstName)
+                ProfileManager.setStoredLastName(applicationContext, person.lastName)
+                ProfileManager.setStoredSex(applicationContext, person.sex)
+                ProfileManager.setStoredUserWeight(applicationContext, person.weight)
+                ProfileManager.setStoredUserAge(applicationContext, person.age)
+
+                //Goes to the next activity since profile was successfully created
+               goToNextActivity()
             }
             else {
                 Toast.makeText(this, "User profile is required to use the app\n"
                     + "1 or more fields are incorrect!"
                     , Toast.LENGTH_SHORT).show()
             }
-
-
         }
+    }
+
+    private fun goToNextActivity(){
+        //Switching to the other Activity
+        val intent = Intent(this@MainActivity, FitnessDayActivity::class.java)
+        startActivity(intent)
+        finish() //Killing it so that the activity dies after it switches
+    }
+
+    private fun isProfileCreated() : Boolean{
+        val firstName = ProfileManager.getStoredFirstName(applicationContext)
+        val lastName = ProfileManager.getStoredLastName(applicationContext)
+        val sex = ProfileManager.getStoredSex(applicationContext)
+        val weight = ProfileManager.getStoredUserWeight(applicationContext)
+        val age = ProfileManager.getStoredUserAge(applicationContext)
+
+        return (firstName != "" && lastName != "" && sex != "Select Sex" && weight != 0 && age != 0)
     }
 }
