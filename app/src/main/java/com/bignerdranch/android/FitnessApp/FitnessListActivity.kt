@@ -27,7 +27,7 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
 
     override fun onFitnessItemSelected(dayId: UUID) {
 
-        val intent = Intent(this@FitnessListActivity, FitnessListActivity::class.java)
+        val intent = Intent(this@FitnessListActivity, FitnessDayActivity::class.java)
 
         var b = Bundle()
         b.putSerializable(ARG_FITNESS_DAY_ID, dayId)
