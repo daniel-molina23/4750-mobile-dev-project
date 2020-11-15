@@ -9,7 +9,8 @@
     </string-array>
     <string name="weight">Weight</string>
     <string name="age">Age</string>
-    <string name="new_fitness_day">Add New Day</string>
+    <string name="new_calendar_day">Calendar</string>
     <string name= "my_profile">My Profile</string>
+    <string name="list_view_descriptor">List View</string>
 
 </resources>
