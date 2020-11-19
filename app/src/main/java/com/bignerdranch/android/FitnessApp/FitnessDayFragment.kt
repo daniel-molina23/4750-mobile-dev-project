@@ -1,5 +1,13 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Context
+import android.util.Log
+import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import android.text.format.DateFormat
+import android.view.*
+import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -7,7 +15,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
@@ -16,18 +26,22 @@ private const val FITNESS_DATE = "fitness_date"
 class FitnessDayFragment : Fragment() {
 
     //Defining Variables that will be associated with the widgets
+    private lateinit var fitnessDay: FitnessDay
     private lateinit var addFoodTextView: TextView
     private lateinit var addExerciseTextView: TextView
     private lateinit var notesTextView: EditText
     private lateinit var dateButton: Button
-
+    private val fitnessViewModel: FitnessDayViewModel by lazy {
+        ViewModelProvider(this).get(FitnessDayViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val fitnessDay = FitnessDay()
-        var fitnessId = arguments?.getSerializable(FITNESS_ID) as UUID
-        var fitnessDate = arguments?.getSerializable(FITNESS_DATE) as Date
+        val fitnessDate = arguments?.getSerializable(FITNESS_DATE) as Date
+
+        fitnessViewModel.loadFitnessDay(fitnessDate)
 
         //TODO - load from the database upon it's selection!
         //Must have a way to check the date... -> Date.setOnClickListener
@@ -55,7 +69,20 @@ class FitnessDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO - put the observer of the changes in fragment
+        fitnessViewModel.fitnessDayLiveData.observe(
+            viewLifecycleOwner,
+            Observer{fitnessDay ->
+                fitnessDay?.let{
+                    this.fitnessDay = fitnessDay
+                    updateUI()
+                }
+            }
+        )
+    }
+
+    fun updateUI(){
+        dateButton.text = fitnessDay.date.toString()
+        notesTextView
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -84,6 +111,10 @@ class FitnessDayFragment : Fragment() {
     companion object {
         //get a static instance of the fragment!
         fun newInstance(fitnessId: UUID, date: Date) : FitnessDayFragment{
+            return FitnessDayFragment()
+        }
+
+        fun newInstance(date: Date) : FitnessDayFragment{
             return FitnessDayFragment()
         }
     }
