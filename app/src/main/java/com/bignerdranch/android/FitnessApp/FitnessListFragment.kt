@@ -17,7 +17,7 @@ private const val TAG = "FitnessListFragment"
 class FitnessListFragment : Fragment() {
     //interface for hosting activities
     interface Callbacks{
-        fun onFitnessItemSelected(dayId : UUID) //TODO - implement database to save fields
+        fun onFitnessItemSelected(dayId : UUID, date: Date) //TODO - implement database to save fields
     }
 
     private var callbacks: Callbacks? = null
@@ -97,8 +97,9 @@ class FitnessListFragment : Fragment() {
             }
         }
 
-        override fun onClick(p0: View?) {
-            callbacks?.onFitnessItemSelected(fitnessDay.id)
+        override fun onClick(v: View) {
+            //call interface callback!
+            callbacks?.onFitnessItemSelected(fitnessDay.id, fitnessDay.date)
         }
     }
 

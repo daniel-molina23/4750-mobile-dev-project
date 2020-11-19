@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
-private const val ARG_FITNESS_DAY_ID = "fitness_day_id"
+private const val ARG_FITNESS_DAY_ID = "fitnessList_id"
+private const val ARG_FITNESS_CALENDAR_DATE = "fitnessList_date"
 
 class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +26,13 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
         }//end if
     }
 
-    override fun onFitnessItemSelected(dayId: UUID) {
+    override fun onFitnessItemSelected(dayId: UUID, date: Date) {
 
         val intent = Intent(this@FitnessListActivity, FitnessDayActivity::class.java)
 
         var b = Bundle()
         b.putSerializable(ARG_FITNESS_DAY_ID, dayId)
+        b.putString(ARG_FITNESS_CALENDAR_DATE, date.toString())
         intent.putExtra(ARG_FITNESS_DAY_ID, b) //Put your id to your next Intent
 
         //start the activity with the serializable id

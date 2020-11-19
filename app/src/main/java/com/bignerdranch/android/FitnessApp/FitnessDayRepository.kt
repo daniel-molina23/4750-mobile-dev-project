@@ -23,6 +23,7 @@ class FitnessDayRepository private constructor(context: Context) {
 
     fun getFitnessDays(): LiveData<List<FitnessDay>> = fitnessDao.getFitnessDays()
     fun getFitnessDay(id: UUID): LiveData<FitnessDay?> = fitnessDao.getFitnessDay(id)
+    fun getFitnessDay(date: Date): LiveData<FitnessDay?> = fitnessDao.getFitnessDay(date)
 
     fun updateFitnessDay(fitnessDay: FitnessDay){
         executor.execute {

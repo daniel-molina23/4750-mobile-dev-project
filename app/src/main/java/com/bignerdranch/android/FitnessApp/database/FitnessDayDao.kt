@@ -17,6 +17,9 @@ interface FitnessDayDao {
     @Query("SELECT * FROM FitnessDay WHERE id=(:id)")
     fun getFitnessDay(id: UUID): LiveData<FitnessDay?>
 
+    @Query("SELECT * FROM FitnessDay WHERE date=(:date)")
+    fun getFitnessDay(date: Date): LiveData<FitnessDay?>
+
     @Update
     fun updateFitnessDay(fitnessDay: FitnessDay)
 
