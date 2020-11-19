@@ -10,7 +10,9 @@
     <string name="weight">Weight</string>
     <string name="age">Age</string>
     <string name="new_calendar_day">Calendar</string>
-    <string name= "my_profile">My Profile</string>
+    <string name="my_profile">My Profile</string>
     <string name="list_view_descriptor">List View</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
