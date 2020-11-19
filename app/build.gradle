@@ -36,10 +36,7 @@ dependencies {
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.room:room-runtime:2.2.5'
-<<<<<<< HEAD
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-=======
->>>>>>> d413751c4a7f6195b67241ce0bb0fcd0d1ecca74
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
