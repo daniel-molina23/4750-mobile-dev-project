@@ -4,6 +4,8 @@ import android.view.*
 import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -19,8 +21,8 @@ class FitnessDayFragment : Fragment() {
 
     //Defining Variables that will be associated with the widgets
     private lateinit var fitnessDay: FitnessDay
-    private lateinit var addFoodTextView: TextView
-    private lateinit var addExerciseTextView: TextView
+    private lateinit var addFoodButton: Button
+    private lateinit var addExerciseButton: Button
     private lateinit var notesTextView: EditText
     private lateinit var dateButton: Button
     private val fitnessViewModel: FitnessDayViewModel by lazy {
@@ -35,9 +37,6 @@ class FitnessDayFragment : Fragment() {
         val fitnessDate : Date = Date(time)
 
         fitnessViewModel.loadFitnessDay(fitnessDate)
-
-        //TODO - load from the database upon it's selection!
-        //Must have a way to check the date... -> Date.setOnClickListener
     }
 
     override fun onCreateView(
@@ -48,8 +47,8 @@ class FitnessDayFragment : Fragment() {
         val view = inflater.inflate(R.layout.menu_fragment, container, false)
 
         //Initializing the Widgets
-        addFoodTextView = view.findViewById(R.id.add_food)
-        addExerciseTextView = view.findViewById(R.id.add_exercise)
+        addFoodButton = view.findViewById(R.id.add_food)
+        addExerciseButton = view.findViewById(R.id.add_exercise)
         notesTextView = view.findViewById(R.id.notes_for_day)
         dateButton = view.findViewById(R.id.display_and_change_date_button)
         //TODO - Adding Code Which Edits the Notes
@@ -75,7 +74,50 @@ class FitnessDayFragment : Fragment() {
 
     fun updateUI(){
         dateButton.text = fitnessDay.date.toString()
-        notesTextView
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val titleWatcher = object : TextWatcher {
+
+            override fun beforeTextChanged(sequence: CharSequence?,
+                                           start: Int,
+                                           count: Int,
+                                           after: Int) {
+                //This space intentionally left blank
+            }
+
+            override fun onTextChanged(sequence: CharSequence?,
+                                       start: Int,
+                                       before: Int,
+                                       count: Int) {
+                fitnessDay.notesText = sequence.toString()
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                //This one too
+            }
+        }
+
+        notesTextView.addTextChangedListener(titleWatcher)
+
+        addExerciseButton.setOnClickListener{
+            Toast.makeText(context, "Add Exercise is working!!!", Toast.LENGTH_SHORT).show()
+        }
+
+        addFoodButton.setOnClickListener{
+            Toast.makeText(context, "Add Food is working!!!", Toast.LENGTH_SHORT).show()
+        }
+
+        dateButton.setOnClickListener {
+            Toast.makeText(context, "Date Button is working!!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        fitnessViewModel.saveFitnessDay(fitnessDay)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

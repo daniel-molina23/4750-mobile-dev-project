@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <Button
                     android:id="@+id/add_food"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/add_exercise"/>
 
-                <TextView
+                <Button
                     android:id="@+id/add_exercise"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
