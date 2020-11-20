@@ -12,13 +12,14 @@ import java.util.*
 interface FitnessDayDao {
 
     /**Getting all Of the FitnessDays In the Data base*/
-    @Query("SELECT * FROM fitnessday")
+    @Query("SELECT * FROM Fitnessday")
     fun getFitnessDays(): LiveData<List<FitnessDay>>
 
 
     /**Getting a Specific FitnessDay Object Based on the key which is the date */
-    @Query("SELECT * FROM fitnessDay WHERE date=(:date)")
+    @Query("SELECT * FROM FitnessDay WHERE date=(:date)")
     fun getFitnessDay(date: Date): LiveData<FitnessDay?>    //LiveData<null>
+
 
     @Update
     fun updateFitnessDay(fitnessDay: FitnessDay)

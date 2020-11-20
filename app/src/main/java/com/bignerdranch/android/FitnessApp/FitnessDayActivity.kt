@@ -1,11 +1,13 @@
 package com.bignerdranch.android.FitnessApp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import java.util.*
 
 private const val ARG_FITNESS_DAY_ID = "fitness_day_id"
+private const val TAG = "FitnessDayActivity"
 
 /**
  *
@@ -33,14 +35,6 @@ class FitnessDayActivity : AppCompatActivity()
         {
             //Getting Todays Date as a Date Object
             val currentGregorianDate = GregorianCalendar.getInstance().time
-
-            //if date not present then create a new one
-            if(fitnessViewModel.checkIfDatePresent(currentGregorianDate).value == null)
-            {
-                val fitnessDay = FitnessDay() //Creating a FitnessDay Object
-                fitnessDay.date = currentGregorianDate //Setting its Date To the Current Date
-                fitnessViewModel.addFitnessDay(fitnessDay) //Adding the FitnessDay to the Database
-            }
 
             //create fragment with both fields!!
             val fragment =

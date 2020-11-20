@@ -13,7 +13,6 @@ class FitnessDayViewModel : ViewModel() {
     //Repository instance
     private val fitnessDayRepository = FitnessDayRepository.get()
     private val fitnessDateLiveData = MutableLiveData<Date>()
-    private val fitnessIdLiveData = MutableLiveData<UUID>()
 
     //since is public, don't expose MutableLiveData
     var fitnessDayLiveData: LiveData<FitnessDay?> =
@@ -22,8 +21,8 @@ class FitnessDayViewModel : ViewModel() {
         }
 
     //Getting the FitnessDay Live Data For the Specified FitnessDay Object
-    fun checkIfDatePresent(date: Date) : LiveData<FitnessDay?> {
-        return fitnessDayRepository.getFitnessDay(date) //Returning the LiveData
+    fun isDatePresent(date: Date) : Boolean {
+        return fitnessDayRepository.getFitnessDay(date).value != null //Returning the LiveData
     }
 
     //Adds a FitnessDay to the Database

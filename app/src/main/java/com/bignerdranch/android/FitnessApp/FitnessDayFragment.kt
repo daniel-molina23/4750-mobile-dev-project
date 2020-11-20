@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.format.DateFormat
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,8 +18,12 @@ import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
 private const val ARG_FITNESS_DATE = "fitness_date"
+private const val DIALOG_DATE = "DialogDate"
+private const val REQUEST_DATE = 0
+private const val DATE_FORMAT = "EEEE MMM. d, yyyy"
+private const val TAG = "FitnessDayFragment"
 
-class FitnessDayFragment : Fragment() {
+class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
 
     //Defining Variables that will be associated with the widgets
     private lateinit var fitnessDay: FitnessDay
@@ -33,10 +39,16 @@ class FitnessDayFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         fitnessDay = FitnessDay()
-        val time = arguments?.getString(ARG_FITNESS_DATE) as Long
-        val fitnessDate : Date = Date(time)
+        //initialize date to current
+        val time = arguments?.getLong(ARG_FITNESS_DATE)!!
+        val date = Date(time)
 
-        fitnessViewModel.loadFitnessDay(fitnessDate)
+        //if date not present, add new day to database
+        if(!fitnessViewModel.isDatePresent(date)){
+            fitnessViewModel.addFitnessDay(fitnessDay)
+        }
+        //load the current date
+        fitnessViewModel.loadFitnessDay(date)
     }
 
     override fun onCreateView(
@@ -51,7 +63,10 @@ class FitnessDayFragment : Fragment() {
         addExerciseButton = view.findViewById(R.id.add_exercise)
         notesTextView = view.findViewById(R.id.notes_for_day)
         dateButton = view.findViewById(R.id.display_and_change_date_button)
-        //TODO - Adding Code Which Edits the Notes
+
+        //initialize to today's date!
+        dateButton.text = getDateFormatString(fitnessDay.date)
+
         return view
     }
 
@@ -70,11 +85,6 @@ class FitnessDayFragment : Fragment() {
                 }
             }
         )
-    }
-
-    fun updateUI()
-    {
-        dateButton.text = fitnessDay.date.toString()
     }
 
     override fun onStart() {
@@ -112,7 +122,16 @@ class FitnessDayFragment : Fragment() {
         }
 
         dateButton.setOnClickListener {
-            Toast.makeText(context, "Date Button is working!!", Toast.LENGTH_SHORT).show()
+            //save the current app's data as is
+//            fitnessViewModel.saveFitnessDay(fitnessDay)
+            //then use the DatePickerFragment
+            DatePickerFragment.newInstance(fitnessDay.date).apply{
+                //sending data to the target fragment, connection
+                setTargetFragment(this@FitnessDayFragment,
+                    REQUEST_DATE)
+                show(this@FitnessDayFragment.parentFragmentManager,
+                    DIALOG_DATE)
+            }
         }
     }
 
@@ -143,7 +162,31 @@ class FitnessDayFragment : Fragment() {
         return true
     }
 
+    override fun onDateSelected(date: Date) {
+//        createNewFitnessDay(date)
+        updateUI()
+    }
 
+//    fun createNewFitnessDay(date: Date){
+//        //if date not present then create a new one
+//        if(!fitnessViewModel.checkIfDatePresent(date))
+//        {
+//            Log.d(TAG,": adding new FitnessDay to Database")
+//            fitnessDay = FitnessDay() //Creating a FitnessDay Object
+//            fitnessDay.date = date //Setting its Date To the Current Date
+//            fitnessViewModel.addFitnessDay(fitnessDay) //Adding the FitnessDay to the Database
+//        }
+//        fitnessViewModel.loadFitnessDay(date)
+//    }
+
+    private fun getDateFormatString(date: Date) : String{
+        return DateFormat.format(DATE_FORMAT, date).toString()
+    }
+
+    private fun updateUI(){
+        dateButton.text = getDateFormatString(fitnessDay.date)
+        notesTextView.setText(fitnessDay.notesText)
+    }
 
     //Static method
     companion object {
