@@ -73,7 +73,8 @@ class FitnessDayFragment : Fragment() {
         )
     }
 
-    fun updateUI(){
+    fun updateUI()
+    {
         dateButton.text = fitnessDay.date.toString()
         notesTextView
     }
@@ -101,11 +102,10 @@ class FitnessDayFragment : Fragment() {
     }
 
 
+
+    //Static method
     companion object {
         fun newInstance(date: Date) : FitnessDayFragment{
-//            val crime = Crime()
-//            crimeListViewModel.addCrime(crime)
-//            callbacks?.onCrimeSelected(crime.id)
 
             val args = Bundle().apply{
                 putLong(ARG_FITNESS_DATE, date.time)

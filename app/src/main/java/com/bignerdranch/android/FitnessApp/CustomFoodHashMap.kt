@@ -36,7 +36,21 @@ class CustomFoodHashMap()
         this.hashMap[key.toLowerCase()] = value
     }
 
-    fun parseHashMap() : String {
+    override fun toString() : String {
         return "breakfast/" + this.hashMap["breakfast"] + ",lunch/" + this.hashMap["lunch"] + ",dinner/" + this.hashMap["dinner"] + ",snacks/" + this.hashMap["snacks"]
     }
+
+    /**Loop through all the present keys value pairs and adds the values*/
+    fun computeTotalCalories() : Int
+    {
+        var answer: Int = 0
+        for((key, value) in this.hashMap)
+        {
+            answer += value
+        }
+
+        return answer
+    }
+
+
 }
