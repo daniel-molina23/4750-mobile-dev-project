@@ -11,14 +11,14 @@ import java.util.*
 @Dao
 interface FitnessDayDao {
 
+    /**Getting all Of the FitnessDays In the Data base*/
     @Query("SELECT * FROM fitnessday")
     fun getFitnessDays(): LiveData<List<FitnessDay>>
 
-    @Query("SELECT * FROM FitnessDay WHERE id=(:id)")
-    fun getFitnessDay(id: UUID): LiveData<FitnessDay?>
 
-    @Query("SELECT * FROM FitnessDay WHERE date=(:date)")
-    fun getFitnessDay(date: Date): LiveData<FitnessDay?>
+    /**Getting a Specific FitnessDay Object Based on the key which is the date */
+    @Query("SELECT * FROM fitnessDay WHERE date=(:date)")
+    fun getFitnessDay(date: Date): LiveData<FitnessDay?>    //LiveData<null>
 
     @Update
     fun updateFitnessDay(fitnessDay: FitnessDay)

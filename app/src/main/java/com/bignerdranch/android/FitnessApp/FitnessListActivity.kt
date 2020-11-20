@@ -8,6 +8,11 @@ import java.util.*
 private const val ARG_FITNESS_DAY_ID = "fitnessList_id"
 private const val ARG_FITNESS_CALENDAR_DATE = "fitnessList_date"
 
+/**
+ * This Activity is responsible for switching to the FitnessListFragment
+ * - Acts as the Container for that fragment class
+ * */
+
 class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +31,11 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
         }//end if
     }
 
-    override fun onFitnessItemSelected(dayId: UUID, date: Date) {
+    override fun onFitnessItemSelected(date: Date) {
 
         val intent = Intent(this@FitnessListActivity, FitnessDayActivity::class.java)
 
         var b = Bundle()
-        b.putSerializable(ARG_FITNESS_DAY_ID, dayId)
         b.putString(ARG_FITNESS_CALENDAR_DATE, date.toString())
         intent.putExtra(ARG_FITNESS_DAY_ID, b) //Put your id to your next Intent
 

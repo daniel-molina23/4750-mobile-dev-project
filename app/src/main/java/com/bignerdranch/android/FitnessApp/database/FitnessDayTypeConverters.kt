@@ -20,18 +20,9 @@ class FitnessDayTypeConverters {
     }
 
     @TypeConverter
-    fun toUUID(uuid: String?) : UUID?{
-        return UUID.fromString(uuid)
-    }
-
-    @TypeConverter
-    fun fromUUID(uuid: UUID?) : String?{
-        return uuid?.toString()
-    }
-
-    @TypeConverter
-    fun fromCustomFoodHashMap(cHMapFood: CustomFoodHashMap?) : String? {
-        return cHMapFood?.parseHashMap()
+    fun fromCustomFoodHashMap(cHMapFood: CustomFoodHashMap?) : String?
+    {
+        return cHMapFood?.toString()
     }
 
     @TypeConverter
@@ -42,8 +33,9 @@ class FitnessDayTypeConverters {
     }
 
     @TypeConverter
-    fun fromCustomExerciseHashMap(cHMapFood: CustomExerciseHashMap?) : String? {
-        return cHMapFood?.parseHashMap()
+    fun fromCustomExerciseHashMap(cHMapFood: CustomExerciseHashMap?) : String?
+    {
+        return cHMapFood?.toString()
     }
 
     @TypeConverter

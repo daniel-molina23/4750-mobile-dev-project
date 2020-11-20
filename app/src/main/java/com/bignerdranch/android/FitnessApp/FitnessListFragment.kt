@@ -17,7 +17,7 @@ private const val TAG = "FitnessListFragment"
 class FitnessListFragment : Fragment() {
     //interface for hosting activities
     interface Callbacks{
-        fun onFitnessItemSelected(dayId : UUID, date: Date) //TODO - implement database to save fields
+        fun onFitnessItemSelected(date: Date) //TODO - implement database to save fields
     }
 
     private var callbacks: Callbacks? = null
@@ -82,24 +82,28 @@ class FitnessListFragment : Fragment() {
 
             dateTextView.text = fitnessDay.date.toString() //Date instance
 
-            calorieTextView.text = fitnessDay.calories.toString() //numeric value
+            calorieTextView.text = fitnessDay.foodCalories.toString() //numeric value
 
-            foodAddedImageView.visibility = if (fitnessDay.foodIsAdded) {
+            //Depending if they have inputted any foods then we will show the image
+            foodAddedImageView.visibility = if (fitnessDay.foodCalories.computeTotalCalories() > 0) {
                 View.VISIBLE
             } else{
                 View.GONE
             }
 
-            exerciseAddedImageView.visibility = if (fitnessDay.exerciseIsAdded) {
+            exerciseAddedImageView.visibility = if (fitnessDay.exerciseCalories.computeTotalCalories() > 0)
+            {
                 View.VISIBLE
-            } else{
+            }
+            else
+            {
                 View.GONE
             }
         }
 
         override fun onClick(v: View) {
             //call interface callback!
-            callbacks?.onFitnessItemSelected(fitnessDay.id, fitnessDay.date)
+            callbacks?.onFitnessItemSelected(fitnessDay.date)
         }
     }
 

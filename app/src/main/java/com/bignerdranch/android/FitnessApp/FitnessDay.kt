@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity
-data class FitnessDay(@PrimaryKey val id: UUID = UUID.randomUUID(),
+data class FitnessDay(
                       @PrimaryKey var date: Date = Date(),
                       var notesText: String = "",
                       var foodCalories: CustomFoodHashMap = CustomFoodHashMap(),

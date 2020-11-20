@@ -7,6 +7,11 @@ import java.util.*
 
 private const val ARG_FITNESS_DAY_ID = "fitness_day_id"
 
+/**
+ *
+ * This Activity Handles the Fragments for the
+ * Main Menu , AddFood, Add Exercise, And DatePicker Fragments
+ * */
 class FitnessDayActivity : AppCompatActivity()
 {
 
@@ -19,19 +24,22 @@ class FitnessDayActivity : AppCompatActivity()
         setContentView(R.layout.activity_menu)
         setSupportActionBar(findViewById(R.id.toolbar)) //basic toolbar
 
+        //Telling the fragment manager where to put the fragment in this Activity (FitnessDayActivity)
         val currentFragment =
             supportFragmentManager.findFragmentById(R.id.fitnessDay_fragment_container)
 
-        if(currentFragment == null) {
-
-            //today's date
+        //If there is no fragment
+        if(currentFragment == null)
+        {
+            //Getting Todays Date as a Date Object
             val currentGregorianDate = GregorianCalendar.getInstance().time
 
             //if date not present then create a new one
-            if(!fitnessViewModel.checkIfDatePresent(currentGregorianDate)){
-                val fitnessDay = FitnessDay()
-                fitnessDay.date = currentGregorianDate
-                fitnessViewModel.addFitnessDay(fitnessDay)
+            if(fitnessViewModel.checkIfDatePresent(currentGregorianDate).value == null)
+            {
+                val fitnessDay = FitnessDay() //Creating a FitnessDay Object
+                fitnessDay.date = currentGregorianDate //Setting its Date To the Current Date
+                fitnessViewModel.addFitnessDay(fitnessDay) //Adding the FitnessDay to the Database
             }
 
             //create fragment with both fields!!

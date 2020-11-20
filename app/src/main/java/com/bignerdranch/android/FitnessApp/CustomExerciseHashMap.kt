@@ -33,7 +33,21 @@ class CustomExerciseHashMap() {
         this.hashMap[key.toLowerCase()] = value
     }
 
-    fun parseHashMap() : String{
+    override fun toString() : String{
         return "weight/" + this.hashMap["weight"] + ",cardio/" + this.hashMap["cardio"]
+    }
+
+    /**Computes all the values  */
+
+    /**Loop through all the present keys value pairs and adds the values*/
+    fun computeTotalCalories() : Int
+    {
+        var answer: Int = 0
+        for((key, value) in this.hashMap)
+        {
+            answer += value
+        }
+
+        return answer
     }
 }

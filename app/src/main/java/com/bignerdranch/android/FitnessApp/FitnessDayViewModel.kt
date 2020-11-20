@@ -21,19 +21,12 @@ class FitnessDayViewModel : ViewModel() {
             fitnessDayRepository.getFitnessDay(fitnessDate)
         }
 
-    var fitnessDayIdLiveData: LiveData<FitnessDay?> =
-        Transformations.switchMap(fitnessIdLiveData) { fitnessId ->
-            fitnessDayRepository.getFitnessDay(fitnessId)
-        }
-
-    fun loadFitnessDay(fitnessId: UUID){
-        fitnessIdLiveData.value = fitnessId
+    //Getting the FitnessDay Live Data For the Specified FitnessDay Object
+    fun checkIfDatePresent(date: Date) : LiveData<FitnessDay?> {
+        return fitnessDayRepository.getFitnessDay(date) //Returning the LiveData
     }
 
-    fun checkIfDatePresent(date: Date) : Boolean {
-        return fitnessDayRepository.getFitnessDay(date) != null
-    }
-
+    //Adds a FitnessDay to the Database
     fun addFitnessDay(fitnessDay: FitnessDay){
         fitnessDayRepository.addFitnessDay(fitnessDay)
     }
