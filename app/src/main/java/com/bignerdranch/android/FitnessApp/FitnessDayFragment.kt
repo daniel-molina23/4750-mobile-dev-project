@@ -1,27 +1,19 @@
 package com.bignerdranch.android.FitnessApp
 
-import android.content.Context
-import android.util.Log
-import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.text.format.DateFormat
 import android.view.*
 import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
-private const val FITNESS_DATE = "fitness_date"
+private const val ARG_FITNESS_DATE = "fitness_date"
 
 class FitnessDayFragment : Fragment() {
 
@@ -38,8 +30,9 @@ class FitnessDayFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val fitnessDay = FitnessDay()
-        val fitnessDate = arguments?.getSerializable(FITNESS_DATE) as Date
+        fitnessDay = FitnessDay()
+        val time = arguments?.getString(ARG_FITNESS_DATE) as Long
+        val fitnessDate : Date = Date(time)
 
         fitnessViewModel.loadFitnessDay(fitnessDate)
 
@@ -109,13 +102,18 @@ class FitnessDayFragment : Fragment() {
 
 
     companion object {
-        //get a static instance of the fragment!
-        fun newInstance(fitnessId: UUID, date: Date) : FitnessDayFragment{
-            return FitnessDayFragment()
-        }
-
         fun newInstance(date: Date) : FitnessDayFragment{
-            return FitnessDayFragment()
+//            val crime = Crime()
+//            crimeListViewModel.addCrime(crime)
+//            callbacks?.onCrimeSelected(crime.id)
+
+            val args = Bundle().apply{
+                putLong(ARG_FITNESS_DATE, date.time)
+            }
+
+            return FitnessDayFragment().apply{
+                arguments = args
+            }
         }
     }
 }

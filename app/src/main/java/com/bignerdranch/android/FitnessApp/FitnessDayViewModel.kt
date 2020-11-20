@@ -30,6 +30,14 @@ class FitnessDayViewModel : ViewModel() {
         fitnessIdLiveData.value = fitnessId
     }
 
+    fun checkIfDatePresent(date: Date) : Boolean {
+        return fitnessDayRepository.getFitnessDay(date) != null
+    }
+
+    fun addFitnessDay(fitnessDay: FitnessDay){
+        fitnessDayRepository.addFitnessDay(fitnessDay)
+    }
+
     fun loadFitnessDay(date: Date){
         fitnessDateLiveData.value = date
     }

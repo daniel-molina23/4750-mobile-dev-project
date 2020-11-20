@@ -8,5 +8,5 @@ import java.util.*
 data class FitnessDay(@PrimaryKey val id: UUID = UUID.randomUUID(),
                       @PrimaryKey var date: Date = Date(),
                       var notesText: String = "",
-                      var foodCalories: CustomHashMap = CustomHashMap(4, true),
-                      var exerciseCalories: CustomHashMap = CustomHashMap(2, false)){}
+                      var foodCalories: CustomFoodHashMap = CustomFoodHashMap(),
+                      var exerciseCalories: CustomExerciseHashMap = CustomExerciseHashMap()){}
