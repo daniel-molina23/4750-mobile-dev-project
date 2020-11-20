@@ -21,11 +21,7 @@ class FitnessDayViewModel : ViewModel() {
         }
 
     //Getting the FitnessDay Live Data For the Specified FitnessDay Object
-<<<<<<< HEAD
     fun isDatePresent(date: Date) : Boolean {
-=======
-    fun checkIfDatePresent(date: Date) : Boolean {
->>>>>>> 1bc3a194f476c723f9a3309f76dc8ba97f7e665c
         return fitnessDayRepository.getFitnessDay(date).value != null //Returning the LiveData
     }
 
