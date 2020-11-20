@@ -37,11 +37,15 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         fitnessDay = FitnessDay()
+<<<<<<< HEAD
         //initialize date to current
         val time = arguments?.getLong(ARG_FITNESS_DATE)!!
         val date = Date(time)
+=======
+        val time = arguments?.getLong(ARG_FITNESS_DATE)!!
+        val fitnessDate : Date = Date(time)
+>>>>>>> 1bc3a194f476c723f9a3309f76dc8ba97f7e665c
 
         //if date not present, add new day to database
         if(!fitnessViewModel.isDatePresent(date)){
@@ -87,7 +91,17 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
         )
     }
 
+<<<<<<< HEAD
     override fun onStart() {
+=======
+    fun updateUI()
+    {
+        dateButton.text = fitnessDay.date.toString()
+    }
+
+    override fun onStart()
+    {
+>>>>>>> 1bc3a194f476c723f9a3309f76dc8ba97f7e665c
         super.onStart()
 
         val titleWatcher = object : TextWatcher {
