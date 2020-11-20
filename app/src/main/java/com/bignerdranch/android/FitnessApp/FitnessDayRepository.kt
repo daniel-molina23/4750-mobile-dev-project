@@ -22,6 +22,7 @@ class FitnessDayRepository private constructor(context: Context) {
     private val executor = Executors.newSingleThreadExecutor()
 
     fun getFitnessDays(): LiveData<List<FitnessDay>> = fitnessDao.getFitnessDays()
+
     fun getFitnessDay(date: Date): LiveData<FitnessDay?> = fitnessDao.getFitnessDay(date)
 
     fun updateFitnessDay(fitnessDay: FitnessDay){

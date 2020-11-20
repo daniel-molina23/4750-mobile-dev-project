@@ -31,9 +31,8 @@ class FitnessDayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         fitnessDay = FitnessDay()
-        val time = arguments?.getString(ARG_FITNESS_DATE) as Long
+        val time = arguments?.getLong(ARG_FITNESS_DATE)!!
         val fitnessDate : Date = Date(time)
 
         fitnessViewModel.loadFitnessDay(fitnessDate)
@@ -77,7 +76,8 @@ class FitnessDayFragment : Fragment() {
         dateButton.text = fitnessDay.date.toString()
     }
 
-    override fun onStart() {
+    override fun onStart()
+    {
         super.onStart()
 
         val titleWatcher = object : TextWatcher {
