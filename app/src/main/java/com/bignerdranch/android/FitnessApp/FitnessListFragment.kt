@@ -2,28 +2,36 @@ package com.bignerdranch.android.FitnessApp
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
+import androidx.lifecycle.Observer
+
 
 private const val TAG = "FitnessListFragment"
 
 class FitnessListFragment : Fragment() {
     //interface for hosting activities
     interface Callbacks{
-        fun onFitnessItemSelected(date: Date) //TODO - implement database to save fields
+        fun changeFitnessDayFragment(date: Date) //TODO - implement database to save fields
     }
 
     private var callbacks: Callbacks? = null
 
     private lateinit var fitnessDayRecyclerView: RecyclerView
 
+    // Added to create the livedata observer under onViewCreated
+    private val fitnessViewModel: FitnessDayViewModel by lazy {
+        ViewModelProvider(this).get(FitnessDayViewModel::class.java)
+    }
     //adapter added for the class
     private var adapter : FitnessDayAdapter? = FitnessDayAdapter(emptyList())
 
@@ -54,12 +62,23 @@ class FitnessListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //add a crimeListViewModel.LiveDataObserver
+        fitnessViewModel.fitnessDayLiveData.observe(
+            viewLifecycleOwner,
+            Observer{ fitnessDays ->
+                fitnessDays?.let {
+                    Log.i(TAG, "Fitness days have been imported");
+                    // Need update UI function
+                }
+            }
+        )
     }
 
     override fun onDetach() {
         super.onDetach()
         callbacks = null
     }
+
+
 
     private inner class FitnessDayHolder(view : View) :RecyclerView.ViewHolder(view),
             View.OnClickListener{
@@ -103,7 +122,7 @@ class FitnessListFragment : Fragment() {
 
         override fun onClick(v: View) {
             //call interface callback!
-            callbacks?.onFitnessItemSelected(fitnessDay.date)
+            callbacks?.changeFitnessDayFragment(fitnessDay.date)
         }
     }
 
@@ -127,7 +146,7 @@ class FitnessListFragment : Fragment() {
 
     //static reference
     companion object{
-        //gets new fagment instance singleton
+        //gets new fragment instance singleton
         fun newInstance() : FitnessListFragment {
             return FitnessListFragment()
         }
