@@ -25,6 +25,12 @@ class FitnessDayViewModel : ViewModel() {
         return fitnessDayRepository.getFitnessDay(date).value != null //Returning the LiveData
     }
 
+    //only get when you are certain the fitnessDay exists by
+    //      using the method above first
+    fun getFitnessDayAtDate(date: Date) : FitnessDay {
+        return fitnessDayRepository.getFitnessDay(date).value!!
+    }
+
     //Adds a FitnessDay to the Database
     fun addFitnessDay(fitnessDay: FitnessDay){
         fitnessDayRepository.addFitnessDay(fitnessDay)
