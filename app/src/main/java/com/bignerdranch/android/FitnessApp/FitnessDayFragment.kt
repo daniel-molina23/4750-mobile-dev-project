@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import java.util.*
@@ -75,6 +76,10 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
     ): View? {
         val view = inflater.inflate(R.layout.menu_fragment, container, false)
 
+        //connect the options menu
+        (activity as AppCompatActivity).setSupportActionBar(view.findViewById(R.id.toolbar))
+        setHasOptionsMenu(true)
+
         //Initializing the Widgets
         addFoodButton = view.findViewById(R.id.add_food) as Button
         addExerciseButton = view.findViewById(R.id.add_exercise) as Button
@@ -127,8 +132,6 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
                                        before: Int,
                                        count: Int) {
                 fitnessDay.notesText = sequence.toString()
-                // Updates fitnessDay notes section after text has changed
-                fitnessViewModel.saveFitnessDay(fitnessDay);
             }
 
             override fun afterTextChanged(sequence: Editable?) {
