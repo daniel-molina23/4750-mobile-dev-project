@@ -23,6 +23,10 @@ private const val REQUEST_DATE = 0
 private const val DATE_FORMAT = "EEEE MMM. d, yyyy"
 private const val TAG = "FitnessDayFragment"
 
+/**
+ * Main Menu Screen
+ * */
+
 class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
 
     /*

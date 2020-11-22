@@ -31,7 +31,7 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
         }//end if
     }
 
-    override fun onFitnessItemSelected(date: Date) {
+    override fun changeFitnessDayFragment(date: Date) {
 
         val intent = Intent(this@FitnessListActivity, FitnessDayActivity::class.java)
 
