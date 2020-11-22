@@ -62,12 +62,12 @@ class FitnessListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //add a crimeListViewModel.LiveDataObserver
-        fitnessViewModel.fitnessDayLiveData.observe(
+        fitnessViewModel.fitnessDayLiveDataList.observe(
             viewLifecycleOwner,
-            Observer{ fitnessDays ->
-                fitnessDays?.let {
+            Observer{ fitnessDayLiveDataList ->
+                fitnessDayLiveDataList?.let {
                     Log.i(TAG, "Fitness days have been imported");
-                    updateUI(fitnessDays)
+                    updateUI(fitnessDayLiveDataList)
                 }
             }
         )

@@ -20,6 +20,8 @@ class FitnessDayViewModel : ViewModel() {
             fitnessDayRepository.getFitnessDay(fitnessDate)
         }
 
+    val fitnessDayLiveDataList = fitnessDayRepository.getFitnessDays()
+
     //Getting the FitnessDay Live Data For the Specified FitnessDay Object
     fun isDatePresent(date: Date) : Boolean {
         return fitnessDayRepository.getFitnessDay(date).value != null //Returning the LiveData
