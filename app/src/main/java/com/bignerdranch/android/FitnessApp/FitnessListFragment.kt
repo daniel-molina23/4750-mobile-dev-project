@@ -67,7 +67,7 @@ class FitnessListFragment : Fragment() {
             Observer{ fitnessDays ->
                 fitnessDays?.let {
                     Log.i(TAG, "Fitness days have been imported");
-                    // Need update UI function
+                    updateUI(fitnessDays)
                 }
             }
         )
@@ -124,6 +124,11 @@ class FitnessListFragment : Fragment() {
             //call interface callback!
             callbacks?.changeFitnessDayFragment(fitnessDay.date)
         }
+    }
+
+    private fun updateUI(fitnessDays: List<FitnessDay>){
+        adapter = FitnessDayAdapter(fitnessDays)
+        fitnessDayRecyclerView.adapter = adapter
     }
 
     private inner class FitnessDayAdapter(var fitnessDaysList : List<FitnessDay>)
