@@ -123,6 +123,8 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
                                        before: Int,
                                        count: Int) {
                 fitnessDay.notesText = sequence.toString()
+                // Updates fitnessDay notes section after text has changed
+                fitnessViewModel.saveFitnessDay(fitnessDay);
             }
 
             override fun afterTextChanged(sequence: Editable?) {

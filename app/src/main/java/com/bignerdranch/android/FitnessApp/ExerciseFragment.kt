@@ -50,6 +50,7 @@ class ExerciseFragment : Fragment()
         /**Checking if the User Clicked the Main Menu Button */
         this.mainMenuButton.setOnClickListener { view: View ->
             //Kill the method so that the onDestroy
+            // Should update database to show new exercise calories based on added exercise
         }
 
         return view
