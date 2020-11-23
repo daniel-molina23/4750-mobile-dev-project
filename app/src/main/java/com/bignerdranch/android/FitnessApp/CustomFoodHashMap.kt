@@ -9,7 +9,7 @@ class CustomFoodHashMap()
         this.hashMap["breakfast"] = 0
         this.hashMap["lunch"] = 0
         this.hashMap["dinner"] = 0
-        this.hashMap["snack"] = 0
+        //this.hashMap["snack"] = 0
     }
 
     constructor(parsableStringForDatabase : String?) : this(){
@@ -37,7 +37,7 @@ class CustomFoodHashMap()
     }
 
     override fun toString() : String {
-        return "breakfast/" + this.hashMap["breakfast"] + ",lunch/" + this.hashMap["lunch"] + ",dinner/" + this.hashMap["dinner"] + ",snacks/" + this.hashMap["snacks"]
+        return "breakfast/" + this.hashMap["breakfast"] + ",lunch/" + this.hashMap["lunch"] + ",dinner/" + this.hashMap["dinner"]
     }
 
     /**Loop through all the present keys value pairs and adds the values*/
