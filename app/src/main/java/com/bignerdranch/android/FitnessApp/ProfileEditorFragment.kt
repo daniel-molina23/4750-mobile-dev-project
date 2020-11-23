@@ -47,7 +47,8 @@ class ProfileEditorFragment : Fragment() {
         this.sexSpinner = view.findViewById(R.id.profile_edit_sex)
         this.weightInput = view.findViewById(R.id.profile_edit_weight)
         this.ageInput = view.findViewById(R.id.profile_edit_age)
-        this.saveProfileButton = view.findViewById(R.id.profile_edit_height)
+        this.heightInput = view.findViewById(R.id.profile_edit_height)
+        this.saveProfileButton = view.findViewById(R.id.saveProfile)
 
 
         val context = activity!!.applicationContext
