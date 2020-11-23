@@ -8,6 +8,7 @@ private const val PREF_LAST_NAME = "userLastName"
 private const val PREF_USER_SEX = "userSex"
 private const val PREF_USER_WEIGHT = "userWeight"
 private const val PREF_USER_AGE = "userAge"
+private const val PREF_USER_HEIGHT = "userHeight"
 
 object ProfileManager{
 
@@ -69,5 +70,30 @@ object ProfileManager{
     fun getStoredUserAge(context: Context) : Int{
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         return pref.getInt(PREF_USER_AGE, 0)!!
+    }
+
+    fun setStoredUserHeight(context: Context, height: Int){
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .edit()
+            .putInt(PREF_USER_HEIGHT, height)
+            .apply()
+    }
+
+    fun getStoredUserHeight(context: Context) : Int{
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        return pref.getInt(PREF_USER_HEIGHT, 0)!!
+    }
+
+    fun getBMR(context: Context): Double{
+        val sex = getStoredSex(context)
+        val age = getStoredUserAge(context)
+        val weight = getStoredUserWeight(context) // ------ in pounds
+        val height: Int = getStoredUserHeight(context) //----- in inches
+
+        return if(sex == "Male"){
+            66 + (6.23 * weight) + (12.7 * height) - (6.8 * age)
+        }else{//Female
+            655 + (4.35 * weight) + (4.7 * height) - (4.7 * age)
+        }
     }
 }
