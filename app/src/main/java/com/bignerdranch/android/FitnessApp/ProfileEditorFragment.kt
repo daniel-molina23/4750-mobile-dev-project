@@ -1,5 +1,6 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +32,23 @@ class ProfileEditorFragment : Fragment() {
 
     //Will Contain all the info about the person
     private var person: Person = Person("","","",0,0, 0)
+
+    //Used to pass data to the Activity
+    private lateinit var dataPasser: OnDataPass
+
+    /**Used to initialize the dataPasser Object */
+    override fun onAttach(context: Context)
+    {
+        super.onAttach(context)
+        this.dataPasser = context as OnDataPass
+    }
+
+    /**Helper Method Used to Pass Data to the Activity*/
+    private fun passData(data: FragmentToSwitchTo, fitnessDay: FitnessDay)
+    {
+        dataPasser.onDataPass(data, fitnessDay)
+    }
+
 
 
     override fun onCreateView(
@@ -136,6 +154,7 @@ class ProfileEditorFragment : Fragment() {
                 ProfileManager.setStoredUserHeight(context, person.height)
 
                 Toast.makeText(context, "Profile Updated\n" , Toast.LENGTH_SHORT).show()
+                this.dataPasser.onDataPass(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, FitnessDay()) //Going to The FitnessDayFragment
             }
             else
             {
