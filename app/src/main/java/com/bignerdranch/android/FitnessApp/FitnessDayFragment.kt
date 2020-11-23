@@ -13,9 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import org.w3c.dom.Text
 import java.util.*
-import kotlin.properties.Delegates
 
 private const val FITNESS_ID = "fitness_id"
 private const val ARG_FITNESS_DATE = "fitness_date"
@@ -48,8 +46,8 @@ class FitnessDayFragment : Fragment(){
     private lateinit var notesEditText: EditText
     private lateinit var dateTextView: TextView
     private lateinit var progressBar: ProgressBar
-    private lateinit var goalTextView: TextView
-    private var goal: Int = 0
+    private lateinit var motivationTextView: TextView
+    private var motivation: MotivationClass = MotivationClass()
 
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
@@ -104,9 +102,10 @@ class FitnessDayFragment : Fragment(){
         addExerciseButton = view.findViewById(R.id.add_exercise) as Button
         notesEditText = view.findViewById(R.id.notes_for_day) as EditText
         dateTextView = view.findViewById(R.id.display_and_change_date_button) as TextView
-        goalTextView = view.findViewById(R.id.bmrTotal) as TextView
         progressBar = view.findViewById(R.id.progressBar) as ProgressBar
         progressBar.max = 2
+
+        motivationTextView = view.findViewById(R.id.motivation_text_view) as TextView
 
         //Compute the total calories and populate the progress bar!!
         foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
@@ -114,7 +113,9 @@ class FitnessDayFragment : Fragment(){
 
         //initialize to today's date for seamless feel
         dateTextView.text = getDateFormatString(fitnessDay.date)
-        goalTextView.text = ProfileManager.getBMR(context!!).toString()
+
+        //Initializing the Motivation Quote
+        this.motivationTextView.setText(motivation.getMotivation())
 
         return view
     }
