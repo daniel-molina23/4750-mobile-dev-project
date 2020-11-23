@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.LiveData
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple fragment class which is called every time the user clicks add food
  */
-class FoodFragment : Fragment()
+class FoodFragment(date: Date) : Fragment()
 {
 
     private lateinit var breakfastEditText : EditText
@@ -32,6 +33,10 @@ class FoodFragment : Fragment()
 
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
+
+    // Getting reference to fitness day that data is being added to
+    private var fitnessDay: LiveData<FitnessDay?> = fitnessDayRepo.getFitnessDay(date)
+
 
     //Used to pass data to the Activity
     private lateinit var dataPasser: OnDataPass
@@ -89,6 +94,16 @@ class FoodFragment : Fragment()
         super.onDestroy()
 
         /**Define the logic which copy the test in all the edit Text */
+
+        // Creates a CustomFoodHashMap for the given text
+        var foodHashMap: CustomFoodHashMap =
+            CustomFoodHashMap("breakfast/" + breakfastEditText.text +
+                            ",lunch/" + lunchEditText.text + ",dinner/" + dinnerEditText.text + ",snack/" + snackEditText)
+
+        fitnessDay.value?.foodCalories ?: foodHashMap
+
+        fitnessDayRepo.updateFitnessDay(fitnessDay)
+
 
     }
 
