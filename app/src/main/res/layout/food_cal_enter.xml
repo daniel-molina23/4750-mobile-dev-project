@@ -107,22 +107,13 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HERE IS SOMETHING MOTIVATING"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/calRemainBackground"
-            android:textStyle="italic"
-            android:paddingBottom="30dp"
-            />
 
         <Button
             android:id="@+id/food_to_activity_menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/rounded_btn"
             android:text="Main Menu"
             android:textColor="@android:color/white"
