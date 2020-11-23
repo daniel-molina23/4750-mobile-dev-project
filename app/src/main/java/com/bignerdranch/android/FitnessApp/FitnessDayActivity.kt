@@ -65,13 +65,15 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
     {
         this.fragmentToSwtichTo = data
 
+
         //Switch to the Food_Fragment
         if(this.fragmentToSwtichTo == FragmentToSwitchTo.FOOD_FRAGMENT)
         {
             //Switch to FoodFragment
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fitnessDay_fragment_container, FoodFragment())
+                .replace(R.id.fitnessDay_fragment_container, FoodFragment(GregorianCalendar.getInstance().time))
+                .addToBackStack(null)
                 .commit()
         }
         //Switch to the Exercise Fragment
@@ -80,10 +82,11 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
             //Switch to ExerciseFragment
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fitnessDay_fragment_container, ExerciseFragment())
+                .replace(R.id.fitnessDay_fragment_container, ExerciseFragment(GregorianCalendar.getInstance().time)) //With the Current Date
+                .addToBackStack(null)
                 .commit()
         }
-        //Switching to the FitnessDay Fragment
+        //Switching to the FitnessDay Fragment (Needed For Main Menu Button)
         else if (this.fragmentToSwtichTo == FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
         {
             val currentGregorianDate = GregorianCalendar.getInstance().time

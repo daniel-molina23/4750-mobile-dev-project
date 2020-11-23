@@ -192,7 +192,6 @@ class FitnessDayFragment : Fragment(){
 
                 val intent = Intent(activity, FitnessListActivity::class.java)
                 startActivity(intent)
-                activity!!.finish() //TODO - ensure "!!" works always....
             }
         }
         return true

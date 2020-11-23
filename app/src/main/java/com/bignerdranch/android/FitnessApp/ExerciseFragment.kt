@@ -18,7 +18,7 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple fragment class which is called every time the user clicks add exercise
  */
-class ExerciseFragment : Fragment()
+class ExerciseFragment(date: Date) : Fragment()
 {
 
     private lateinit var weightTrainEditText: EditText
@@ -26,7 +26,7 @@ class ExerciseFragment : Fragment()
     private lateinit var mainMenuButton: Button
 
     //Used As a Key to get the Correct Data Base Item
-    private lateinit var currentDate: Date
+    private var currentDate: Date = date
 
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
