@@ -115,6 +115,14 @@
                     android:textColorHint="#7A8089" />
 
 
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter height in inches"
+                    android:textColor="#363A43"
+                    android:textColorHint="#7A8089" />
+
 
                 <Button
                     android:id="@+id/createProfile"

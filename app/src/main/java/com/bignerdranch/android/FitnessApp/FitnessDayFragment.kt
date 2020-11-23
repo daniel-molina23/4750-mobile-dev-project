@@ -179,13 +179,9 @@ class FitnessDayFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.calendar_dropdown -> {
-                Toast.makeText(context, "Calendar Drop Down!"
-                    , Toast.LENGTH_SHORT).show()
-            }
+
             R.id.profile_dropdown -> {
-                Toast.makeText(context, "Profile Drop Down!"
-                    , Toast.LENGTH_SHORT).show()
+                this.passData(FragmentToSwitchTo.PROFILE_EDITOR_FRAGMENT, FitnessDay()) //Switching to the Profile_editor_fragment
             }
             R.id.list_view_dropdown -> {
                 Toast.makeText(context, "List View Drop Down!"

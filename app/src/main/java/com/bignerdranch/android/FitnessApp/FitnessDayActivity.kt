@@ -86,6 +86,18 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
                 .addToBackStack(null)
                 .commit()
         }
+
+        //Switching to the ProfileEditorFragment
+        else if(this.fragmentToSwtichTo == FragmentToSwitchTo.PROFILE_EDITOR_FRAGMENT)
+        {
+            //Switch to ProfileEditorFragment
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fitnessDay_fragment_container, ProfileEditorFragment()) //With the Current Date
+                .addToBackStack(null)
+                .commit()
+        }
+
         //Switching to the FitnessDay Fragment (Needed For Main Menu Button)
         else if (this.fragmentToSwtichTo == FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
         {
