@@ -9,5 +9,6 @@ package com.bignerdranch.android.FitnessApp
 data class Person(var firstName: String,
                   var lastName: String,
                   var sex: String,
-                  var weight: Int, var age: Int)
-{}
+                  var weight: Int,
+                  var age: Int,
+                  var height: Int){}

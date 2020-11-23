@@ -12,13 +12,14 @@ private const val REQUEST_CODE_MENU = 0
 class MainActivity : AppCompatActivity() {
 
     //Will Contain all the info about the person
-    private var person: Person = Person("","","",0,0)
+    private var person: Person = Person("","","",0,0, 0)
     //Used to Reference the Widgets in the layout file
     private lateinit var firstNameInput: EditText
     private lateinit var lastNameInput: EditText
     private lateinit var sexSpinner: Spinner
     private lateinit var weightInput: EditText
     private lateinit var ageInput: EditText
+    private lateinit var heightInput: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         sexSpinner = findViewById(R.id.sex_spinner)
         weightInput = findViewById(R.id.et_weight)
         ageInput = findViewById(R.id.et_age)
+        heightInput = findViewById(R.id.et_height)
 
 
         //adapter for the spinner to respond to selection
@@ -50,11 +52,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        var createProfile : Button = findViewById(R.id.createProfile)
+        val createProfile : Button = findViewById(R.id.createProfile)
         createProfile.setOnClickListener {
 
             var tempWeight = "" //temporary variable to ensure correct format prior to append to 'weight' var
             var tempAge = ""    //temporary variable to ensure correct format prior to append to 'age' var
+            var tempHeight = ""
 
             //Saving the Users First and Last Name
             person.firstName = firstNameInput.getText().toString()
@@ -66,8 +69,9 @@ class MainActivity : AppCompatActivity() {
             //Getting the Users Weight and Age as well as ensuring correct input
             tempWeight = weightInput.text.toString()
             tempAge = ageInput.text.toString()
+            tempHeight = heightInput.text.toString()
 
-            var weightRegex = Regex("[1-9][0-9]{1,2}")
+            val weightRegex = Regex("[1-9][0-9]{1,2}")
 
             if (weightRegex.matches(tempWeight)) {
                 person.weight = Integer.valueOf(tempWeight)
@@ -75,16 +79,25 @@ class MainActivity : AppCompatActivity() {
                 person.weight = 0 //ensure original value
             }
 
-            var ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
+            val ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
 
             if (ageRegex.matches(tempAge)) {
                 person.age = Integer.valueOf(tempAge)
             }else{
                 person.age = 0 //ensure original value
             }
+
+            val heightRegex = Regex("[4-9][0-9]|10[0-9]")//[40-109] - 5 year old to tallest man
+
+            if(heightRegex.matches(tempHeight)){
+                person.height = Integer.valueOf(tempHeight)
+            }else{
+                person.height = 0
+            }
+            
             //TODO - make the name, sex, age, and weight to save locally
             //IF we got valid Input
-            if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
+            if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0 && person.height != 0) {
 
                 //make the ProfileManager Persist through
                 ProfileManager.setStoredFirstName(applicationContext, person.firstName)
@@ -92,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 ProfileManager.setStoredSex(applicationContext, person.sex)
                 ProfileManager.setStoredUserWeight(applicationContext, person.weight)
                 ProfileManager.setStoredUserAge(applicationContext, person.age)
+                ProfileManager.setStoredUserHeight(applicationContext, person.height)
 
                 //Goes to the next activity since profile was successfully created
                goToNextActivity()
@@ -118,7 +132,8 @@ class MainActivity : AppCompatActivity() {
         val sex = ProfileManager.getStoredSex(applicationContext)
         val weight = ProfileManager.getStoredUserWeight(applicationContext)
         val age = ProfileManager.getStoredUserAge(applicationContext)
+        val height = ProfileManager.getStoredUserHeight(applicationContext)
 
-        return (firstName != "" && lastName != "" && sex != "Select Sex" && weight != 0 && age != 0)
+        return (firstName != "" && lastName != "" && sex != "Select Sex" && weight != 0 && age != 0 && height != 0)
     }
 }
