@@ -133,6 +133,20 @@
                     app:layout_constraintTop_toBottomOf="@id/weight_hint" />
 
 
+                <TextView
+                    android:id="@+id/height_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Height: "
+                    android:textColor="@color/blackText"
+                    android:textSize="24dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/age_hint" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -190,9 +204,21 @@
                     android:text="SampleAge"
                     android:textColor="@color/blackText"
                     android:textSize="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profile_edit_weight" />
+
+                <EditText
+                    android:id="@+id/profile_edit_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SampleHeight"
+                    android:textColor="@color/blackText"
+                    android:textSize="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_edit_age" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

@@ -84,16 +84,16 @@ object ProfileManager{
         return pref.getInt(PREF_USER_HEIGHT, 0)!!
     }
 
-    fun getBMR(context: Context): Double{
+    fun getBMR(context: Context): Int {
         val sex = getStoredSex(context)
         val age = getStoredUserAge(context)
         val weight = getStoredUserWeight(context) // ------ in pounds
         val height: Int = getStoredUserHeight(context) //----- in inches
 
         return if(sex == "Male"){
-            66 + (6.23 * weight) + (12.7 * height) - (6.8 * age)
+            (66 + (6.23 * weight) + (12.7 * height) - (6.8 * age)).toInt()
         }else{//Female
-            655 + (4.35 * weight) + (4.7 * height) - (4.7 * age)
+            (655 + (4.35 * weight) + (4.7 * height) - (4.7 * age)).toInt()
         }
     }
 }

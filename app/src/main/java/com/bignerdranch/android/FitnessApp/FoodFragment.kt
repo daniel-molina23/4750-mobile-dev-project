@@ -72,7 +72,6 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         this.breakfastEditText = view.findViewById(R.id.breakfast_cal)
         this.lunchEditText = view.findViewById(R.id.lunch_cal)
         this.dinnerEditText = view.findViewById(R.id.dinner_cal)
-        this.snackEditText = view.findViewById(R.id.snack_cal)
         this.menuButton = view.findViewById(R.id.food_to_activity_menu_btn)
 
         return view; //Returning the View

@@ -26,10 +26,11 @@ class ProfileEditorFragment : Fragment() {
     private lateinit var sexSpinner: Spinner
     private lateinit var weightInput: EditText
     private lateinit var ageInput: EditText
+    private lateinit var heightInput: EditText
     private lateinit var saveProfileButton: Button
 
     //Will Contain all the info about the person
-    private var person: Person = Person("","","",0,0)
+    private var person: Person = Person("","","",0,0, 0)
 
 
     override fun onCreateView(
@@ -46,8 +47,7 @@ class ProfileEditorFragment : Fragment() {
         this.sexSpinner = view.findViewById(R.id.profile_edit_sex)
         this.weightInput = view.findViewById(R.id.profile_edit_weight)
         this.ageInput = view.findViewById(R.id.profile_edit_age)
-        this.saveProfileButton = view.findViewById(R.id.saveProfile)
-
+        this.saveProfileButton = view.findViewById(R.id.profile_edit_height)
 
 
         val context = activity!!.applicationContext
@@ -78,16 +78,19 @@ class ProfileEditorFragment : Fragment() {
         this.lastNameInput.setText(ProfileManager.getStoredLastName(context) + "" )
         this.weightInput.setText(ProfileManager.getStoredUserWeight(context).toString())
         this.ageInput.setText(ProfileManager.getStoredUserAge(context).toString())
+        this.heightInput.setText(ProfileManager.getStoredUserHeight(context).toString())
 
         /**Checking if the Save ProfileButton Was Clicked */
         this.saveProfileButton.setOnClickListener { view ->
 
             var tempWeight = "" //temporary variable to ensure correct format prior to append to 'weight' var
             var tempAge = ""    //temporary variable to ensure correct format prior to append to 'age' var
+            var tempHeight = ""
 
             //Saving the Users First and Last Name
             person.firstName = firstNameInput.getText().toString()
             person.lastName = lastNameInput.getText().toString()
+            tempHeight = heightInput.text.toString()
 
             //Getting the Users Sex
             person.sex =  sexSpinner.selectedItem.toString()
@@ -96,7 +99,7 @@ class ProfileEditorFragment : Fragment() {
             tempWeight = weightInput.text.toString()
             tempAge = ageInput.text.toString()
 
-            var weightRegex = Regex("[1-9][0-9]{1,2}")
+            val weightRegex = Regex("[1-9][0-9]{1,2}")
 
             if (weightRegex.matches(tempWeight)) {
                 person.weight = Integer.valueOf(tempWeight)
@@ -104,21 +107,32 @@ class ProfileEditorFragment : Fragment() {
                 person.weight = 0 //ensure original value
             }
 
-            var ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
+            val ageRegex = Regex("([1-9][0-9]|1[0-4][0-9]|[0-9])")
 
             if (ageRegex.matches(tempAge)) {
                 person.age = Integer.valueOf(tempAge)
             }else{
                 person.age = 0 //ensure original value
             }
+
+            val heightRegex = Regex("[4-9][0-9]|10[0-9]")//[40-109] - 5 year old to tallest man
+
+            if(heightRegex.matches(tempHeight)){
+                person.height = Integer.valueOf(tempHeight)
+            }else{
+                person.height = 0
+            }
+
             //IF we got valid Input
-            if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0) {
+            if(person.firstName != "" && person.lastName != "" && person.sex != "Select Sex" && person.weight != 0 && person.age != 0 && person.height != 0) {
+
                 //make the ProfileManager Persist through
                 ProfileManager.setStoredFirstName(context, person.firstName)
                 ProfileManager.setStoredLastName(context, person.lastName)
                 ProfileManager.setStoredSex(context, person.sex)
                 ProfileManager.setStoredUserWeight(context, person.weight)
                 ProfileManager.setStoredUserAge(context, person.age)
+                ProfileManager.setStoredUserHeight(context, person.height)
 
                 Toast.makeText(context, "Profile Updated\n" , Toast.LENGTH_SHORT).show()
             }
