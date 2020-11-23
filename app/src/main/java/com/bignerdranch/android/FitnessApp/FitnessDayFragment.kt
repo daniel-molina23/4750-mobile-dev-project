@@ -46,6 +46,7 @@ class FitnessDayFragment : Fragment(){
     private lateinit var notesEditText: EditText
     private lateinit var dateTextView: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var goalTextView: TextView
     private lateinit var motivationTextView: TextView
     private var motivation: MotivationClass = MotivationClass()
 
@@ -102,6 +103,7 @@ class FitnessDayFragment : Fragment(){
         addExerciseButton = view.findViewById(R.id.add_exercise) as Button
         notesEditText = view.findViewById(R.id.notes_for_day) as EditText
         dateTextView = view.findViewById(R.id.display_and_change_date_button) as TextView
+        goalTextView = view.findViewById(R.id.bmrTotal) as TextView
         progressBar = view.findViewById(R.id.progressBar) as ProgressBar
         progressBar.max = 2
 
@@ -113,6 +115,7 @@ class FitnessDayFragment : Fragment(){
 
         //initialize to today's date for seamless feel
         dateTextView.text = getDateFormatString(fitnessDay.date)
+        goalTextView.text = ProfileManager.getBMR(context!!).toString()
 
         //Initializing the Motivation Quote
         this.motivationTextView.setText(motivation.getMotivation())
@@ -207,6 +210,7 @@ class FitnessDayFragment : Fragment(){
     }
 
     private fun updateUI(){
+        goalTextView.text = ProfileManager.getBMR(context!!).toString()
         dateTextView.text = getDateFormatString(fitnessDay.date)
         notesEditText.setText(fitnessDay.notesText)
         foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
