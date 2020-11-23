@@ -1,4 +1,4 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay
 
 import android.content.Context
 import android.view.*
@@ -8,11 +8,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bignerdranch.android.FitnessApp.*
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.MotivationClass
+import com.bignerdranch.android.FitnessApp.FitnessList.FitnessListActivity
+import com.bignerdranch.android.FitnessApp.Profile.ProfileManager
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
@@ -20,7 +24,6 @@ private const val ARG_FITNESS_DATE = "fitness_date"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = 0
 private const val DATE_FORMAT = "EEEE MMM. d, yyyy"
-private const val TAG = "FitnessDayFragment"
 
 /**
  * Main Menu Screen
@@ -40,13 +43,15 @@ class FitnessDayFragment : Fragment(){
     //Defining Variables that will be associated with the widgets
     private lateinit var fitnessDay: FitnessDay
     private lateinit var addFoodButton: Button
-    private var foodCalorieCount: Int = 0
+    private lateinit var foodCalorieCount: TextView
     private lateinit var addExerciseButton: Button
-    private var exerciseCalorieCount: Int = 0
+    private lateinit var exerciseCalorieCount: TextView
+    private lateinit var remainingCalories: TextView
     private lateinit var notesEditText: EditText
     private lateinit var dateTextView: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var goalTextView: TextView
+    private lateinit var progressTextView: TextView
     private lateinit var motivationTextView: TextView
     private var motivation: MotivationClass = MotivationClass()
 
@@ -103,15 +108,22 @@ class FitnessDayFragment : Fragment(){
         addExerciseButton = view.findViewById(R.id.add_exercise) as Button
         notesEditText = view.findViewById(R.id.notes_for_day) as EditText
         dateTextView = view.findViewById(R.id.display_and_change_date_button) as TextView
+        foodCalorieCount = view.findViewById(R.id.foodCalEntered) as TextView
+        exerciseCalorieCount = view.findViewById(R.id.exerciseCalEntered) as TextView
+        remainingCalories = view.findViewById(R.id.remainingCal) as TextView
         goalTextView = view.findViewById(R.id.bmrTotal) as TextView
         progressBar = view.findViewById(R.id.progressBar) as ProgressBar
         progressBar.max = 2
 
+        progressTextView = view.findViewById(R.id.tv_progress) as TextView
+
         motivationTextView = view.findViewById(R.id.motivation_text_view) as TextView
 
         //Compute the total calories and populate the progress bar!!
-        foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
-        exerciseCalorieCount = fitnessDay.exerciseCalories.computeTotalCalories()
+        foodCalorieCount.text = fitnessDay.foodCalories.computeTotalCalories().toString()
+        exerciseCalorieCount.text = fitnessDay.exerciseCalories.computeTotalCalories().toString()
+
+        remainingCalories.text = getRemainingCaloriesString()
 
         //initialize to today's date for seamless feel
         dateTextView.text = getDateFormatString(fitnessDay.date)
@@ -121,6 +133,13 @@ class FitnessDayFragment : Fragment(){
         this.motivationTextView.setText(motivation.getMotivation())
 
         return view
+    }
+
+    fun getRemainingCaloriesString() : String{
+        val food = Integer.valueOf(foodCalorieCount.text.toString())
+        val exercise = Integer.valueOf(exerciseCalorieCount.text.toString())
+        val finalValue = ProfileManager.getBMR(context!!) - food + exercise
+        return finalValue.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -213,21 +232,30 @@ class FitnessDayFragment : Fragment(){
         goalTextView.text = ProfileManager.getBMR(context!!).toString()
         dateTextView.text = getDateFormatString(fitnessDay.date)
         notesEditText.setText(fitnessDay.notesText)
-        foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
-        exerciseCalorieCount = fitnessDay.exerciseCalories.computeTotalCalories()
+        //Compute the total calories and populate the progress bar!!
+        foodCalorieCount.text = fitnessDay.foodCalories.computeTotalCalories().toString()
+        exerciseCalorieCount.text = fitnessDay.exerciseCalories.computeTotalCalories().toString()
+        remainingCalories.text = getRemainingCaloriesString()
         //change the progress bar look!
-        progressBar.progress = if(foodCalorieCount != 0 && exerciseCalorieCount != 0){
+        progressBar.progress = if(foodCalorieCount.text != "0" && exerciseCalorieCount.text != "0"){
             2
-        } else if (foodCalorieCount == 0 && exerciseCalorieCount == 0){
+        } else if (foodCalorieCount.text == "0" && exerciseCalorieCount.text == "0"){
             0
         } else{
             1
+        }
+
+        //change the text at the end of the progress bar!
+        when(progressBar.progress){
+            0 -> progressTextView.text = "0/2"
+            1 -> progressTextView.text = "1/2"
+            2 -> progressTextView.text = "2/2"
         }
     }
 
     //Static method
     companion object {
-        fun newInstance(date: Date) : FitnessDayFragment{
+        fun newInstance(date: Date) : FitnessDayFragment {
 
             val args = Bundle().apply{
                 putLong(ARG_FITNESS_DATE, date.time)

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.bignerdranch.android.FitnessApp.FitnessDay
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
 import java.util.*
 
 @Dao

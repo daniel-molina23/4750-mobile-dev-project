@@ -1,4 +1,4 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessList
 
 import android.content.Context
 import android.os.Bundle
@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import androidx.lifecycle.Observer
+import com.bignerdranch.android.FitnessApp.FitnessDay.FitnessDayViewModel
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.R
 
 
 private const val TAG = "FitnessListFragment"

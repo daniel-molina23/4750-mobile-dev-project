@@ -1,9 +1,11 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessList
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.FitnessApp.FitnessDay.FitnessDayActivity
+import com.bignerdranch.android.FitnessApp.R
 import java.util.*
 
 private const val ARG_FITNESS_DAY_ID = "fitnessList_id"
@@ -16,7 +18,7 @@ private const val ARG_FITNESS_CALENDAR_DATE = "fitnessList_date"
 
 private const val TAG = "FitnessListActivity"
 
-class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
+class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?)
     {

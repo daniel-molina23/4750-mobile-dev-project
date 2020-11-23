@@ -1,4 +1,4 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay
 
 import android.app.DatePickerDialog
 import android.app.Dialog

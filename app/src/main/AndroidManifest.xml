@@ -10,14 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
-        <activity android:name=".FitnessDayActivity">
+        <activity android:name=".FitnessDay.FitnessDayActivity">
         </activity>
-        <activity android:name=".FitnessListActivity"
+        <activity android:name=".FitnessList.FitnessListActivity"
             android:launchMode="singleTask">
             <!--  singleTask: is like a static activity or singleton -->
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Profile.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 

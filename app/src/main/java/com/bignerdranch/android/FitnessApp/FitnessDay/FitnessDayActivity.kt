@@ -1,8 +1,13 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.FitnessApp.*
+import com.bignerdranch.android.FitnessApp.FitnessDay.ExerciseAndFood.ExerciseFragment
+import com.bignerdranch.android.FitnessApp.FitnessDay.ExerciseAndFood.FoodFragment
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.Profile.ProfileEditorFragment
 import java.util.*
 
 private const val TAG = "FitnessDayActivity"
