@@ -6,5 +6,9 @@ package com.bignerdranch.android.FitnessApp
  * */
 
 //Using a Data Class so that The compiler automatically creates setters and getters for us
-data class Person(var firstName: String, var lastName: String, var sex: String, var weight: Int, var age: Int)
-{}
+data class Person(var firstName: String,
+                  var lastName: String,
+                  var sex: String,
+                  var weight: Int,
+                  var age: Int,
+                  var height: Int){}

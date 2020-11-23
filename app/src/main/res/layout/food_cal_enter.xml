@@ -69,7 +69,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="25dp"
                     android:layout_marginEnd="5dp"
-                    android:hint="Breakfast"
+                    android:hint="Breakfast Calories"
                     android:singleLine="false"
                     app:layout_constraintBottom_toTopOf="@+id/lunch_cal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="5dp"
-                    android:hint="Lunch"
+                    android:hint="Lunch Calories"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/breakfast_cal"
@@ -97,45 +97,23 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="5dp"
-                    android:hint="Dinner"
+                    android:hint="Dinner Calories"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lunch_cal"
-                    />
-
-                <EditText
-                    android:id="@+id/snack_cal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="5dp"
-                    android:hint="Snacks"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dinner_cal"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HERE IS SOMETHING MOTIVATING"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/calRemainBackground"
-            android:textStyle="italic"
-            android:paddingBottom="30dp"
-            />
 
         <Button
             android:id="@+id/food_to_activity_menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/rounded_btn"
             android:text="Main Menu"
             android:textColor="@android:color/white"
