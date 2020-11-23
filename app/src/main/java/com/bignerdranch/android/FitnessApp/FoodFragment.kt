@@ -2,6 +2,8 @@ package com.bignerdranch.android.FitnessApp
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +30,10 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     private lateinit var dinnerEditText: EditText
     private lateinit var snackEditText: EditText
     private lateinit var menuButton: Button
+    private lateinit var breakfastText: String
+    private lateinit var lunchText: String
+    private lateinit var dinnerText: String
+    private lateinit var snackText: String
 
     //Used As a Key to get the Correct Data Base Item
     private lateinit var currentDate: Date
@@ -85,16 +91,52 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         this.menuButton.setOnClickListener { view ->
           this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
         }
+/*
+        val snackWatcher = object : TextWatcher {
 
+            override fun beforeTextChanged(sequence: CharSequence?,
+                                           start: Int,
+                                           count: Int,
+                                           after: Int) {
+                //This space intentionally left blank
+            }
+
+            override fun onTextChanged(sequence: CharSequence?,
+                                       start: Int,
+                                       before: Int,
+                                       count: Int) {
+                Log.d("FOOD_FRAGMENT", snackEditText.text.toString())
+            }
+
+            override fun afterTextChanged(sequence: Editable?) {
+                snackText = snackEditText.text.toString()
+            }
+        }
+
+        snackEditText.addTextChangedListener(snackWatcher)*/
     }
 
     override fun onStop() {
         super.onStop()
 
+        breakfastText = breakfastEditText.text.toString()
+        lunchText = lunchEditText.text.toString()
+        dinnerText = dinnerEditText.text.toString()
+
+        if(breakfastEditText.text.toString() == "")
+            breakfastText = "0"
+        if(lunchEditText.text.toString() == "")
+            lunchText = "0"
+        if(dinnerEditText.text.toString() == "")
+            dinnerText = "0"
+
+
+
         // Creates a CustomFoodHashMap for the given text
         var foodHashMap: CustomFoodHashMap =
-            CustomFoodHashMap("breakfast/" + breakfastEditText.text +
-                    ",lunch/" + lunchEditText.text + ",dinner/" + dinnerEditText.text + ",snack/" + snackEditText.text)
+            CustomFoodHashMap("breakfast/" + breakfastText +
+                    ",lunch/" + lunchText + ",dinner/" + dinnerText)
+
 
         fitnessDay.foodCalories = foodHashMap
 
