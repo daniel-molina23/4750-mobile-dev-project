@@ -29,7 +29,7 @@ class ProfileEditorFragment : Fragment() {
     private lateinit var saveProfileButton: Button
 
     //Will Contain all the info about the person
-    private var person: Person = Person("","","",0,0)
+    private var person: Person = Person("","","",0,0,0)
 
 
     override fun onCreateView(
