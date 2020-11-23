@@ -93,9 +93,12 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         }
 
         if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
-            breakfastEditText.setText(fitnessDay.foodCalories.getValue("breakfast").toString())
-            lunchEditText.setText(fitnessDay.foodCalories.getValue("lunch").toString())
-            dinnerEditText.setText(fitnessDay.foodCalories.getValue("dinner").toString())
+            if(fitnessDay.foodCalories.getValue("breakfast") != 0)
+                breakfastEditText.setText(fitnessDay.foodCalories.getValue("breakfast").toString())
+            if(fitnessDay.foodCalories.getValue("lunch") != 0)
+                lunchEditText.setText(fitnessDay.foodCalories.getValue("lunch").toString())
+            if(fitnessDay.foodCalories.getValue("dinner") != 0)
+                dinnerEditText.setText(fitnessDay.foodCalories.getValue("dinner").toString())
         }
     }
 
