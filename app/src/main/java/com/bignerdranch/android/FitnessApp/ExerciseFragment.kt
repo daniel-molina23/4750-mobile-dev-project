@@ -1,5 +1,6 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +31,22 @@ class ExerciseFragment : Fragment()
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
 
+    //Used to pass data to the Activity
+    private lateinit var dataPasser: OnDataPass
+
+    /**Used to initialize the dataPasser Object */
+    override fun onAttach(context: Context)
+    {
+        super.onAttach(context)
+        this.dataPasser = context as OnDataPass
+    }
+
+    /**Helper Method Used to Pass Data to the Activity*/
+    private fun passData(data: FragmentToSwitchTo)
+    {
+        dataPasser.onDataPass(data)
+    }
+
     /**
      * Method Used to Link the Layout with the Fragment
      * As well as Initialize The Widgets
@@ -56,5 +73,18 @@ class ExerciseFragment : Fragment()
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        //Switching Back to the FitnessDayFragment
+        this.mainMenuButton.setOnClickListener { view ->
+            this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
 }

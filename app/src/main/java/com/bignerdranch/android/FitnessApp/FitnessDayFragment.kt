@@ -1,5 +1,6 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Context
 import android.view.*
 import androidx.lifecycle.Observer
 import android.content.Intent
@@ -7,12 +8,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import org.w3c.dom.Text
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
@@ -48,6 +47,22 @@ class FitnessDayFragment : Fragment(){
     private lateinit var progressBar: ProgressBar
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
+    }
+
+    //Used to pass data to the Activity
+    private lateinit var dataPasser: OnDataPass
+
+    /**Used to initialize the dataPasser Object */
+    override fun onAttach(context: Context)
+    {
+        super.onAttach(context)
+        this.dataPasser = context as OnDataPass
+    }
+
+    /**Helper Method Used to Pass Data to the Activity*/
+    private fun passData(data: FragmentToSwitchTo)
+    {
+        dataPasser.onDataPass(data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,10 +128,14 @@ class FitnessDayFragment : Fragment(){
         )
     }
 
+
+    /**Function Called When the Fragment Starts*/
+
     override fun onStart() {
         super.onStart()
 
-        val notesWatcher = object : TextWatcher {
+        val notesWatcher = object : TextWatcher
+        {
 
             override fun beforeTextChanged(sequence: CharSequence?,
                                            start: Int,
@@ -139,12 +158,15 @@ class FitnessDayFragment : Fragment(){
 
         notesEditText.addTextChangedListener(notesWatcher)
 
+        /**Called When the User Clicked the add Exercise Button*/
         addExerciseButton.setOnClickListener {
-            Toast.makeText(context, "Add Exercise is working!!!", Toast.LENGTH_SHORT).show()
+
+            this.passData(FragmentToSwitchTo.EXERCISE_FRAGMENT) //Telling the Activity To Switch To the Exercise Fragment
         }
 
+        /**Called When the User Clicks the add Food button */
         addFoodButton.setOnClickListener {
-            Toast.makeText(context, "Add Food is working!!!", Toast.LENGTH_SHORT).show()
+            this.passData(FragmentToSwitchTo.FOOD_FRAGMENT)  //Telling the Activity To Switch to the Food Fragment
         }
 
     }

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.FitnessApp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +33,21 @@ class FoodFragment : Fragment()
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
 
+    //Used to pass data to the Activity
+    private lateinit var dataPasser: OnDataPass
+
+    /**Used to initialize the dataPasser Object */
+    override fun onAttach(context: Context)
+    {
+        super.onAttach(context)
+        this.dataPasser = context as OnDataPass
+    }
+
+    /**Helper Method Used to Pass Data to the Activity*/
+    private fun passData(data: FragmentToSwitchTo)
+    {
+        dataPasser.onDataPass(data)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,11 +72,24 @@ class FoodFragment : Fragment()
         return view; //Returning the View
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        //Switching Back to the FitnessDayFragment
+        this.menuButton.setOnClickListener { view ->
+          this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
+        }
+
+    }
+
     /**Gets called when the Fragment will be destroyed */
     override fun onDestroy() {
+
+
         super.onDestroy()
 
         /**Define the logic which copy the test in all the edit Text */
 
     }
+
 }
