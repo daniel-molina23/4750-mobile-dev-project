@@ -8,13 +8,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import org.w3c.dom.Text
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
@@ -28,7 +26,7 @@ private const val TAG = "FitnessDayFragment"
  * Main Menu Screen
  * */
 
-class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
+class FitnessDayFragment : Fragment(){
 
     /*
      * Required interface for hosting activities
@@ -46,7 +44,7 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var addExerciseButton: Button
     private var exerciseCalorieCount: Int = 0
     private lateinit var notesEditText: EditText
-    private lateinit var dateButton: Button
+    private lateinit var dateTextView: TextView
     private lateinit var progressBar: ProgressBar
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
@@ -84,7 +82,7 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
         addFoodButton = view.findViewById(R.id.add_food) as Button
         addExerciseButton = view.findViewById(R.id.add_exercise) as Button
         notesEditText = view.findViewById(R.id.notes_for_day) as EditText
-        dateButton = view.findViewById(R.id.display_and_change_date_button) as Button
+        dateTextView = view.findViewById(R.id.display_and_change_date_button) as TextView
         progressBar = view.findViewById(R.id.progressBar) as ProgressBar
         progressBar.max = 2
 
@@ -93,7 +91,7 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
         exerciseCalorieCount = fitnessDay.exerciseCalories.computeTotalCalories()
 
         //initialize to today's date for seamless feel
-        dateButton.text = getDateFormatString(fitnessDay.date)
+        dateTextView.text = getDateFormatString(fitnessDay.date)
 
         return view
     }
@@ -149,16 +147,6 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
             Toast.makeText(context, "Add Food is working!!!", Toast.LENGTH_SHORT).show()
         }
 
-        dateButton.setOnClickListener {
-            //then use the DatePickerFragment
-            DatePickerFragment.newInstance(fitnessDay.date).apply{
-                //sending data to the target fragment, connection
-                setTargetFragment(this@FitnessDayFragment,
-                    REQUEST_DATE)
-                show(this@FitnessDayFragment.parentFragmentManager,
-                    DIALOG_DATE)
-            }
-        }
     }
 
     override fun onStop() {
@@ -188,42 +176,12 @@ class FitnessDayFragment : Fragment(), DatePickerFragment.Callbacks {
         return true
     }
 
-    override fun onDateSelected(date: Date) {
-        //if we select a different date than is present,
-        //      use callbacks to synchronously change fragments
-        if(fitnessDay.date != date){
-            Log.d(TAG, "different date identified!!")
-
-            //save the current app's data as is before switching dates!
-            Log.d(TAG, "Saved the current date before switching to DatePicker!")
-            fitnessViewModel.saveFitnessDay(fitnessDay)
-
-            //date NOT present, add to DB!!!
-            if(!fitnessViewModel.isDatePresent(date)){
-                //only create new table date row for database
-                //   if not present
-                val newFitnessDay = FitnessDay()
-                newFitnessDay.date = date
-                Log.d(TAG, "we saved new date to DB")
-                fitnessViewModel.addFitnessDay(newFitnessDay)
-                //set up the new fitnessDay
-                fitnessDay = newFitnessDay
-            }
-            else{ //date is present in DB
-                fitnessDay = fitnessViewModel.getFitnessDayAtDate(date)
-            }
-            updateUI()
-            callbacks?.changeFitnessDayFragment(date)
-        }
-        //else keep it as is!
-    }
-
     private fun getDateFormatString(date: Date) : String{
         return DateFormat.format(DATE_FORMAT, date).toString()
     }
 
     private fun updateUI(){
-        dateButton.text = getDateFormatString(fitnessDay.date)
+        dateTextView.text = getDateFormatString(fitnessDay.date)
         notesEditText.setText(fitnessDay.notesText)
         foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
         exerciseCalorieCount = fitnessDay.exerciseCalories.computeTotalCalories()

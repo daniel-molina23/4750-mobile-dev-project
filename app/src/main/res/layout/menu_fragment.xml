@@ -285,13 +285,16 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <Button
+            <TextView
                 android:id="@+id/display_and_change_date_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="11/18/2020"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/blackText"
+                />
 
         </LinearLayout>
 

@@ -14,7 +14,9 @@ private const val ARG_FITNESS_CALENDAR_DATE = "fitnessList_date"
  * */
 
 class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -31,7 +33,8 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
         }//end if
     }
 
-    override fun changeFitnessDayFragment(date: Date) {
+    override fun changeFitnessDayFragment(date: Date)
+    {
 
         val intent = Intent(this@FitnessListActivity, FitnessDayActivity::class.java)
 
