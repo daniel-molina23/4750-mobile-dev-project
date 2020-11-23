@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import java.util.*
 
@@ -27,6 +28,10 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
     private lateinit var mainMenuButton: Button
     private lateinit var weightText: String
     private lateinit var cardioText: String
+
+    //in order to validate the inputs made by the user!
+    // from 0 calories - 30,000 calories (world record is 19,000 calories burned in 1 day)
+    private val numericRegex = Regex("[0-9]|[1-9][0-9]{1,3}|[1-2][0-9]{1,4}|(30000)")
 
     //Used As a Key to get the Correct Data Base Item
     //private var currentDate: Date = date
@@ -70,22 +75,11 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
         this.cardioEditText = view.findViewById(R.id.cardio_cal)
         this.mainMenuButton = view.findViewById(R.id.exercise_to_activity_menu_btn)
 
-        /**Checking if the User Clicked the Main Menu Button */
-        this.mainMenuButton.setOnClickListener { view: View ->
-            //Kill the method so that the onDestroy
-            // Should update database to show new exercise calories based on added exercise
-        }
-
         return view
     }
 
     override fun onStart() {
         super.onStart()
-
-        //Switching Back to the FitnessDayFragment
-        this.mainMenuButton.setOnClickListener { view ->
-            this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
-        }
 
         if(fitnessDay.exerciseCalories.computeTotalCalories() != 0) {
             if (fitnessDay.exerciseCalories.getValue("weight") != 0)
@@ -95,30 +89,58 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
         }
 
 
+        //Switching Back to the FitnessDayFragment
+        this.mainMenuButton.setOnClickListener { view ->
+            if(numericRegex.matches(cardioEditText.text) &&
+                numericRegex.matches(weightTrainEditText.text)){
+
+                this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+            }
+            else{
+                Toast.makeText(context, "Please Enter Valid Data\n"
+                        + "1 or more fields are incorrect!"
+                    , Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun ensureProperCalorieInput(){
+        var invalidCount = 0
+        cardioText = if(numericRegex.matches(cardioEditText.text)){
+            cardioEditText.text.toString()
+        } else{
+            invalidCount ++
+            "0"
+        }
+
+        weightText = if(numericRegex.matches(weightTrainEditText.text)){
+            weightTrainEditText.text.toString()
+        } else{
+            invalidCount ++
+            "0"
+        }
+
+        if(invalidCount > 0) {
+            Toast.makeText(context, "1 or more fields defaulted to \"0\"\n"
+                    + "Please go back and enter correctly!"
+                , Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onStop() {
         super.onStop()
 
-        weightText = weightTrainEditText.text.toString()
-        cardioText = cardioEditText.text.toString()
-
-        if(weightTrainEditText.text.toString() == "")
-            weightText = "0"
-        if(cardioEditText.text.toString() == "")
-            cardioText = "0"
+        //ensures only numeric calories were inputted or else
+        //  it will default to 0
+        ensureProperCalorieInput()
 
         // Creates a CustomFoodHashMap for the given text
-        var exerciseHashMap: CustomExerciseHashMap =
+        val exerciseHashMap: CustomExerciseHashMap =
             CustomExerciseHashMap("weight/" + weightText +
                     ",cardio/" + cardioText)
 
         fitnessDay.exerciseCalories = exerciseHashMap
 
         fitnessDayRepo.updateFitnessDay(fitnessDay)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

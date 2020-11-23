@@ -153,7 +153,7 @@ class ProfileEditorFragment : Fragment() {
                 ProfileManager.setStoredUserAge(context, person.age)
                 ProfileManager.setStoredUserHeight(context, person.height)
 
-                Toast.makeText(context, "Profile Updated\n" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Profile Updated!" , Toast.LENGTH_SHORT).show()
                 this.dataPasser.onDataPass(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, FitnessDay()) //Going to The FitnessDayFragment
             }
             else

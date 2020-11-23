@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import java.util.*
 
@@ -32,6 +33,10 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     private lateinit var breakfastText: String
     private lateinit var lunchText: String
     private lateinit var dinnerText: String
+
+    //in order to validate the inputs made by the user!
+    // from 0 calories - 49,999 calories (world record is 35,000 calories in 1 day)
+    private val numericRegex = Regex("[0-9]|[1-9][0-9]{1,3}|[1-4][0-9]{1,4}")
 
     //Used As a Key to get the Correct Data Base Item
     private lateinit var currentDate: Date
@@ -87,7 +92,18 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
         //Switching Back to the FitnessDayFragment
         this.menuButton.setOnClickListener { view ->
-          this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+          if(numericRegex.matches(breakfastEditText.text) &&
+              numericRegex.matches(lunchEditText.text) &&
+              numericRegex.matches(dinnerEditText.text)){
+
+              this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+          }
+          else{
+              Toast.makeText(context, "Please Enter Valid Data\n"
+                      + "1 or more fields are incorrect!"
+                  , Toast.LENGTH_SHORT).show()
+          }
+
         }
 
         if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
@@ -100,24 +116,47 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         }
     }
 
+
+    private fun ensureProperCalorieInput(){
+        var invalidCount = 0
+        breakfastText = if(numericRegex.matches(breakfastEditText.text)){
+            breakfastEditText.text.toString()
+        } else{
+            invalidCount ++
+            "0"
+        }
+
+        lunchText = if(numericRegex.matches(lunchEditText.text)){
+            lunchEditText.text.toString()
+        } else{
+            invalidCount ++
+            "0"
+        }
+
+        dinnerText = if(numericRegex.matches(dinnerEditText.text)){
+            dinnerEditText.text.toString()
+        } else{
+            invalidCount ++
+            "0"
+        }
+
+        if(invalidCount > 0) {
+            Toast.makeText(context, "1 or more fields defaulted to \"0\"\n"
+                + "Please go back and enter correctly!"
+                , Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onStop() {
         super.onStop()
 
-        breakfastText = breakfastEditText.text.toString()
-        lunchText = lunchEditText.text.toString()
-        dinnerText = dinnerEditText.text.toString()
-
-        if(breakfastEditText.text.toString() == "")
-            breakfastText = "0"
-        if(lunchEditText.text.toString() == "")
-            lunchText = "0"
-        if(dinnerEditText.text.toString() == "")
-            dinnerText = "0"
-
+        //ensures only numeric calories were inputted or else
+        //  it will default to 0
+        ensureProperCalorieInput()
 
 
         // Creates a CustomFoodHashMap for the given text
-        var foodHashMap: CustomFoodHashMap =
+        val foodHashMap: CustomFoodHashMap =
             CustomFoodHashMap("breakfast/" + breakfastText +
                     ",lunch/" + lunchText + ",dinner/" + dinnerText)
 
@@ -128,12 +167,4 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
 
     }
-
-    /**Gets called when the Fragment will be destroyed */
-    override fun onDestroy() {
-
-        super.onDestroy()
-
-    }
-
 }
