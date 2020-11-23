@@ -1,8 +1,9 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay.Repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
 import com.bignerdranch.android.FitnessApp.database.FitnessDayDatabase
 import java.lang.IllegalStateException
 import java.util.*
@@ -47,8 +48,8 @@ class FitnessDayRepository private constructor(context: Context) {
             }
         }
 
-        fun get(): FitnessDayRepository{
-            return INSTANCE?: throw IllegalStateException("FitnessRepository must be initialized")
+        fun get(): FitnessDayRepository {
+            return INSTANCE ?: throw IllegalStateException("FitnessRepository must be initialized")
         }
     }
 }

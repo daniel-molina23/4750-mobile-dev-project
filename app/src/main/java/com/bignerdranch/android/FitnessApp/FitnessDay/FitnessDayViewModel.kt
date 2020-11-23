@@ -1,9 +1,11 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.FitnessDay.Repository.FitnessDayRepository
 import java.util.*
 
 class FitnessDayViewModel : ViewModel() {

@@ -13,7 +13,7 @@
         android:gravity="center"
         android:background="@drawable/ic_bg"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".Profile.MainActivity">
 
         <TextView
             android:id="@+id/tv_app_name"

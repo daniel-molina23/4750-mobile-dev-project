@@ -1,8 +1,8 @@
 package com.bignerdranch.android.FitnessApp.database
 
 import androidx.room.TypeConverter
-import com.bignerdranch.android.FitnessApp.CustomExerciseHashMap
-import com.bignerdranch.android.FitnessApp.CustomFoodHashMap
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.CustomExerciseHashMap
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.CustomFoodHashMap
 import java.util.*
 
 class FitnessDayTypeConverters {

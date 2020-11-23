@@ -1,10 +1,11 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.Profile
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.widget.*
+import com.bignerdranch.android.FitnessApp.FitnessDay.FitnessDayActivity
+import com.bignerdranch.android.FitnessApp.R
 
 //User Defined Integer that is sent to the child activity and then received back by the parent activity
 private const val REQUEST_CODE_MENU = 0

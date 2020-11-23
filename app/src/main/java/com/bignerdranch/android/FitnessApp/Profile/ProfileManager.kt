@@ -1,4 +1,4 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.Profile
 
 import android.content.Context
 import android.preference.PreferenceManager

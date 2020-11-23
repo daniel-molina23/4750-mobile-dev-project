@@ -1,4 +1,4 @@
-package com.bignerdranch.android.FitnessApp
+package com.bignerdranch.android.FitnessApp.FitnessDay
 
 import android.content.Context
 import android.view.*
@@ -8,12 +8,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.menu_fragment.*
+import com.bignerdranch.android.FitnessApp.*
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.FitnessDay.data.MotivationClass
+import com.bignerdranch.android.FitnessApp.FitnessList.FitnessListActivity
+import com.bignerdranch.android.FitnessApp.Profile.ProfileManager
 import java.util.*
 
 private const val FITNESS_ID = "fitness_id"
@@ -21,7 +24,6 @@ private const val ARG_FITNESS_DATE = "fitness_date"
 private const val DIALOG_DATE = "DialogDate"
 private const val REQUEST_DATE = 0
 private const val DATE_FORMAT = "EEEE MMM. d, yyyy"
-private const val TAG = "FitnessDayFragment"
 
 /**
  * Main Menu Screen
@@ -253,7 +255,7 @@ class FitnessDayFragment : Fragment(){
 
     //Static method
     companion object {
-        fun newInstance(date: Date) : FitnessDayFragment{
+        fun newInstance(date: Date) : FitnessDayFragment {
 
             val args = Bundle().apply{
                 putLong(ARG_FITNESS_DATE, date.time)
