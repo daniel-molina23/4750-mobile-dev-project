@@ -91,29 +91,12 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         this.menuButton.setOnClickListener { view ->
           this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
         }
-/*
-        val snackWatcher = object : TextWatcher {
 
-            override fun beforeTextChanged(sequence: CharSequence?,
-                                           start: Int,
-                                           count: Int,
-                                           after: Int) {
-                //This space intentionally left blank
-            }
-
-            override fun onTextChanged(sequence: CharSequence?,
-                                       start: Int,
-                                       before: Int,
-                                       count: Int) {
-                Log.d("FOOD_FRAGMENT", snackEditText.text.toString())
-            }
-
-            override fun afterTextChanged(sequence: Editable?) {
-                snackText = snackEditText.text.toString()
-            }
+        if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
+            breakfastEditText.setText(fitnessDay.foodCalories.getValue("breakfast").toString())
+            lunchEditText.setText(fitnessDay.foodCalories.getValue("lunch").toString())
+            dinnerEditText.setText(fitnessDay.foodCalories.getValue("dinner").toString())
         }
-
-        snackEditText.addTextChangedListener(snackWatcher)*/
     }
 
     override fun onStop() {
