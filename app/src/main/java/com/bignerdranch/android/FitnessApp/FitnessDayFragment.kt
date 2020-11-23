@@ -46,6 +46,9 @@ class FitnessDayFragment : Fragment(){
     private lateinit var notesEditText: EditText
     private lateinit var dateTextView: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var motivationTextView: TextView
+    private var motivation: MotivationClass = MotivationClass()
+
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
     }
@@ -102,12 +105,17 @@ class FitnessDayFragment : Fragment(){
         progressBar = view.findViewById(R.id.progressBar) as ProgressBar
         progressBar.max = 2
 
+        motivationTextView = view.findViewById(R.id.motivation_text_view) as TextView
+
         //Compute the total calories and populate the progress bar!!
         foodCalorieCount = fitnessDay.foodCalories.computeTotalCalories()
         exerciseCalorieCount = fitnessDay.exerciseCalories.computeTotalCalories()
 
         //initialize to today's date for seamless feel
         dateTextView.text = getDateFormatString(fitnessDay.date)
+
+        //Initializing the Motivation Quote
+        this.motivationTextView.setText(motivation.getMotivation())
 
         return view
     }
