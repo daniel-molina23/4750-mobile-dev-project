@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.LiveData
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -18,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple fragment class which is called every time the user clicks add exercise
  */
-class ExerciseFragment(date: Date) : Fragment()
+class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
 {
 
     private lateinit var weightTrainEditText: EditText
@@ -26,10 +27,13 @@ class ExerciseFragment(date: Date) : Fragment()
     private lateinit var mainMenuButton: Button
 
     //Used As a Key to get the Correct Data Base Item
-    private var currentDate: Date = date
+    //private var currentDate: Date = date
 
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
+
+    private var fitnessDay: FitnessDay = fitnessDay
+    //private var fitnessDay: LiveData<FitnessDay?> = fitnessDayRepo.getFitnessDay(date)
 
     //Used to pass data to the Activity
     private lateinit var dataPasser: OnDataPass
@@ -42,9 +46,9 @@ class ExerciseFragment(date: Date) : Fragment()
     }
 
     /**Helper Method Used to Pass Data to the Activity*/
-    private fun passData(data: FragmentToSwitchTo)
+    private fun passData(data: FragmentToSwitchTo, fitnessDay: FitnessDay)
     {
-        dataPasser.onDataPass(data)
+        dataPasser.onDataPass(data, fitnessDay)
     }
 
     /**
@@ -78,13 +82,22 @@ class ExerciseFragment(date: Date) : Fragment()
 
         //Switching Back to the FitnessDayFragment
         this.mainMenuButton.setOnClickListener { view ->
-            this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
+            this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
         }
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Creates a CustomFoodHashMap for the given text
+        var exerciseHashMap: CustomExerciseHashMap =
+            CustomExerciseHashMap("weight/" + weightTrainEditText.text +
+                    ",cardio/" + cardioEditText.text)
+
+        fitnessDay.exerciseCalories = exerciseHashMap
+
+        fitnessDayRepo.updateFitnessDay(fitnessDay)
     }
 
 }
