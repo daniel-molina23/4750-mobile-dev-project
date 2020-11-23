@@ -2,11 +2,15 @@ package com.bignerdranch.android.FitnessApp
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 
 
 /**
@@ -31,7 +35,7 @@ class ProfileEditorFragment : Fragment() {
     private lateinit var saveProfileButton: Button
 
     //Will Contain all the info about the person
-    private var person: Person = Person("","","",0,0, 0)
+    private var person: Person = Person("", "", "", 0, 0, 0)
 
     //Used to pass data to the Activity
     private lateinit var dataPasser: OnDataPass
@@ -76,7 +80,7 @@ class ProfileEditorFragment : Fragment() {
             context,
             R.array.sex_array,
             android.R.layout.simple_spinner_item,
-        ).also {adapter ->
+        ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             sexSpinner.adapter = adapter
         }
@@ -94,10 +98,28 @@ class ProfileEditorFragment : Fragment() {
         val context = activity!!.applicationContext
 
         this.firstNameInput.setText(ProfileManager.getStoredFirstName(context) + "")
-        this.lastNameInput.setText(ProfileManager.getStoredLastName(context) + "" )
+        this.lastNameInput.setText(ProfileManager.getStoredLastName(context) + "")
         this.weightInput.setText(ProfileManager.getStoredUserWeight(context).toString())
         this.ageInput.setText(ProfileManager.getStoredUserAge(context).toString())
         this.heightInput.setText(ProfileManager.getStoredUserHeight(context).toString())
+
+        /** Checking and setting the default value for the sex spinner!
+         **/
+        val ogValue = ProfileManager.getStoredSex(context)
+        val adapter = ArrayAdapter.createFromResource(
+            context,
+            R.array.sex_array,
+            android.R.layout.simple_spinner_item
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sexSpinner.adapter = adapter
+
+        if (ogValue != "Select Sex") {
+            val spinnerPosition = adapter.getPosition(ogValue)
+            sexSpinner.setSelection(spinnerPosition)
+        }
+
 
         /**Checking if the Save ProfileButton Was Clicked */
         this.saveProfileButton.setOnClickListener { view ->
@@ -153,14 +175,15 @@ class ProfileEditorFragment : Fragment() {
                 ProfileManager.setStoredUserAge(context, person.age)
                 ProfileManager.setStoredUserHeight(context, person.height)
 
-                Toast.makeText(context, "Profile Updated!" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Profile Updated!", Toast.LENGTH_SHORT).show()
                 this.dataPasser.onDataPass(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, FitnessDay()) //Going to The FitnessDayFragment
             }
             else
             {
-                Toast.makeText(context, "Please Enter Valid Data\n"
-                        + "1 or more fields are incorrect!"
-                    , Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context, "Please Enter Valid Data\n"
+                            + "1 or more fields are incorrect!", Toast.LENGTH_SHORT
+                ).show()
             }
 
         }
