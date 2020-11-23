@@ -29,7 +29,7 @@ class MotivationClass
         fun IntRange.random() =
             Random().nextInt((endInclusive + 1) - start) + start
 
-        var randIndex = (0..this.motivationQuotes.size).random() // Getting a Random Quote from the Motivation Quotes
+        var randIndex = (0 until this.motivationQuotes.size).random() // Getting a Random Quote from the Motivation Quotes
 
         return this.motivationQuotes[randIndex]
     }
