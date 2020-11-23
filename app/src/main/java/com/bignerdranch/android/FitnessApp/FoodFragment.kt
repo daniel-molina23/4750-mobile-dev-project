@@ -29,7 +29,7 @@ class FoodFragment(date: Date) : Fragment()
     private lateinit var menuButton: Button
 
     //Used As a Key to get the Correct Data Base Item
-    private lateinit var currentDate: Date
+    private var currentDate: Date = date
 
     //Getting a Reference to the Singleton (So that we can access the data base)
     private var fitnessDayRepo: FitnessDayRepository = FitnessDayRepository.get()
@@ -40,6 +40,8 @@ class FoodFragment(date: Date) : Fragment()
 
     //Used to pass data to the Activity
     private lateinit var dataPasser: OnDataPass
+
+
 
     /**Used to initialize the dataPasser Object */
     override fun onAttach(context: Context)

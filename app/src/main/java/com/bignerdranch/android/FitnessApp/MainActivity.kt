@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
     private fun goToNextActivity(){
         //Switching to the other Activity
         val intent = Intent(this@MainActivity, FitnessDayActivity::class.java)
+//        val intent = Intent(this@MainActivity, FitnessListActivity::class.java)
         startActivity(intent)
         finish() //Killing it so that the activity dies after it switches
     }
