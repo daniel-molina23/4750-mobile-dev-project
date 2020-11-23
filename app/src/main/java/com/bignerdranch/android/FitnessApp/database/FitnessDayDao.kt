@@ -12,7 +12,7 @@ import java.util.*
 interface FitnessDayDao {
 
     /**Getting all Of the FitnessDays In the Data base*/
-    @Query("SELECT * FROM Fitnessday")
+    @Query("SELECT * FROM FitnessDay")
     fun getFitnessDays(): LiveData<List<FitnessDay>>
 
 

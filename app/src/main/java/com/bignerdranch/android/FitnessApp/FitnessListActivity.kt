@@ -2,6 +2,7 @@ package com.bignerdranch.android.FitnessApp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -13,12 +14,16 @@ private const val ARG_FITNESS_CALENDAR_DATE = "fitnessList_date"
  * - Acts as the Container for that fragment class
  * */
 
+private const val TAG = "FitnessListActivity"
+
 class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks{
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d(TAG, "Started onCreate()")
 
         val currentFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_list_container)

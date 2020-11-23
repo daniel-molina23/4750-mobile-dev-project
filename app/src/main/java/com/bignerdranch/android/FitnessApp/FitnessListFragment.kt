@@ -28,13 +28,13 @@ class FitnessListFragment : Fragment() {
 
     private lateinit var fitnessDayRecyclerView: RecyclerView
 
+    //adapter added for the class
+    private var adapter : FitnessDayAdapter? = FitnessDayAdapter(emptyList())
+
     // Added to create the livedata observer under onViewCreated
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
     }
-    //adapter added for the class
-    private var adapter : FitnessDayAdapter? = FitnessDayAdapter(emptyList())
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,7 +55,8 @@ class FitnessListFragment : Fragment() {
 
         fitnessDayRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        //TODO - plug adapter here for the fitnessListViewModel (class not yet created)
+        //hooking up the adapter to see the holders or list of items
+        fitnessDayRecyclerView.adapter = adapter
         return view
     }
 
@@ -64,21 +65,24 @@ class FitnessListFragment : Fragment() {
         //add a crimeListViewModel.LiveDataObserver
         fitnessViewModel.fitnessDayLiveDataList.observe(
             viewLifecycleOwner,
-            Observer{ fitnessDayLiveDataList ->
-                fitnessDayLiveDataList?.let {
-                    Log.i(TAG, "Fitness days have been imported");
-                    updateUI(fitnessDayLiveDataList)
+            Observer{ fitnessDays ->
+                fitnessDays?.let {
+                    Log.i(TAG, "Fitness days have been imported. Days = ${fitnessDays.size}")
+                    updateUI(fitnessDays)
                 }
             }
         )
+    }
+
+    private fun updateUI(fitnessDays: List<FitnessDay>){
+        adapter = FitnessDayAdapter(fitnessDays)
+        fitnessDayRecyclerView.adapter = adapter
     }
 
     override fun onDetach() {
         super.onDetach()
         callbacks = null
     }
-
-
 
     private inner class FitnessDayHolder(view : View) :RecyclerView.ViewHolder(view),
             View.OnClickListener{
@@ -124,11 +128,6 @@ class FitnessListFragment : Fragment() {
             //call interface callback!
             callbacks?.changeFitnessDayFragment(fitnessDay.date)
         }
-    }
-
-    private fun updateUI(fitnessDays: List<FitnessDay>){
-        adapter = FitnessDayAdapter(fitnessDays)
-        fitnessDayRecyclerView.adapter = adapter
     }
 
     private inner class FitnessDayAdapter(var fitnessDaysList : List<FitnessDay>)
