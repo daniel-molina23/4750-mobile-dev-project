@@ -9,5 +9,6 @@ package com.bignerdranch.android.FitnessApp
  * */
 interface OnDataPass
 {
-    fun onDataPass(data: FragmentToSwitchTo)
+    fun onDataPass(data: FragmentToSwitchTo, fitnessDay: FitnessDay)
+
 }

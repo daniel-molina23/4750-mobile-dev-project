@@ -61,7 +61,7 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
      * /**This Will tell us what fragment to go to next */
      *
      * */
-    override fun onDataPass(data: FragmentToSwitchTo)
+    override fun onDataPass(data: FragmentToSwitchTo, fitnessDay: FitnessDay)
     {
         this.fragmentToSwtichTo = data
 
@@ -72,7 +72,7 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
             //Switch to FoodFragment
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fitnessDay_fragment_container, FoodFragment(GregorianCalendar.getInstance().time))
+                .replace(R.id.fitnessDay_fragment_container, FoodFragment(fitnessDay))
                 .addToBackStack(null)
                 .commit()
         }
@@ -82,7 +82,7 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
             //Switch to ExerciseFragment
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fitnessDay_fragment_container, ExerciseFragment(GregorianCalendar.getInstance().time)) //With the Current Date
+                .replace(R.id.fitnessDay_fragment_container, ExerciseFragment(fitnessDay)) //With the Current Date
                 .addToBackStack(null)
                 .commit()
         }
@@ -90,9 +90,13 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
         else if (this.fragmentToSwtichTo == FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
         {
             val currentGregorianDate = GregorianCalendar.getInstance().time
-            changeFitnessDayFragment(currentGregorianDate)
+            changeFitnessDayFragment(fitnessDay.date)
         }
 
     }
+
+
+
+
 
 }

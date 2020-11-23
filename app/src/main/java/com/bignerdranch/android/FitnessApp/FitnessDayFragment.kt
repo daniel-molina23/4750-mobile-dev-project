@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -60,9 +61,9 @@ class FitnessDayFragment : Fragment(){
     }
 
     /**Helper Method Used to Pass Data to the Activity*/
-    private fun passData(data: FragmentToSwitchTo)
+    private fun passData(data: FragmentToSwitchTo, fitnessDay: FitnessDay)
     {
-        dataPasser.onDataPass(data)
+        dataPasser.onDataPass(data, fitnessDay)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,12 +162,12 @@ class FitnessDayFragment : Fragment(){
         /**Called When the User Clicked the add Exercise Button*/
         addExerciseButton.setOnClickListener {
 
-            this.passData(FragmentToSwitchTo.EXERCISE_FRAGMENT) //Telling the Activity To Switch To the Exercise Fragment
+            this.passData(FragmentToSwitchTo.EXERCISE_FRAGMENT, fitnessDay) //Telling the Activity To Switch To the Exercise Fragment
         }
 
         /**Called When the User Clicks the add Food button */
         addFoodButton.setOnClickListener {
-            this.passData(FragmentToSwitchTo.FOOD_FRAGMENT)  //Telling the Activity To Switch to the Food Fragment
+            this.passData(FragmentToSwitchTo.FOOD_FRAGMENT, fitnessDay)  //Telling the Activity To Switch to the Food Fragment
         }
 
     }
