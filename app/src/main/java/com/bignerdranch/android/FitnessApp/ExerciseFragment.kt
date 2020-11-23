@@ -25,6 +25,8 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
     private lateinit var weightTrainEditText: EditText
     private lateinit var cardioEditText: EditText
     private lateinit var mainMenuButton: Button
+    private lateinit var weightText: String
+    private lateinit var cardioText: String
 
     //Used As a Key to get the Correct Data Base Item
     //private var currentDate: Date = date
@@ -85,19 +87,38 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
             this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
         }
 
+        if(fitnessDay.exerciseCalories.computeTotalCalories() != 0) {
+            if (fitnessDay.exerciseCalories.getValue("weight") != 0)
+                weightTrainEditText.setText(fitnessDay.exerciseCalories.getValue("weight").toString())
+            if (fitnessDay.exerciseCalories.getValue("cardio") != 0)
+                cardioEditText.setText(fitnessDay.exerciseCalories.getValue("cardio").toString())
+        }
+
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
+
+        weightText = weightTrainEditText.text.toString()
+        cardioText = cardioEditText.text.toString()
+
+        if(weightTrainEditText.text.toString() == "")
+            weightText = "0"
+        if(cardioEditText.text.toString() == "")
+            cardioText = "0"
 
         // Creates a CustomFoodHashMap for the given text
         var exerciseHashMap: CustomExerciseHashMap =
-            CustomExerciseHashMap("weight/" + weightTrainEditText.text +
-                    ",cardio/" + cardioEditText.text)
+            CustomExerciseHashMap("weight/" + weightText +
+                    ",cardio/" + cardioText)
 
         fitnessDay.exerciseCalories = exerciseHashMap
 
         fitnessDayRepo.updateFitnessDay(fitnessDay)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

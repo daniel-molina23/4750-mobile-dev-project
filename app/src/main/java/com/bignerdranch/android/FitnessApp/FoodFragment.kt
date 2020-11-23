@@ -28,12 +28,10 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     private lateinit var breakfastEditText : EditText
     private lateinit var lunchEditText: EditText
     private lateinit var dinnerEditText: EditText
-    private lateinit var snackEditText: EditText
     private lateinit var menuButton: Button
     private lateinit var breakfastText: String
     private lateinit var lunchText: String
     private lateinit var dinnerText: String
-    private lateinit var snackText: String
 
     //Used As a Key to get the Correct Data Base Item
     private lateinit var currentDate: Date
@@ -135,10 +133,6 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     override fun onDestroy() {
 
         super.onDestroy()
-
-        /**Define the logic which copy the test in all the edit Text */
-
-
 
     }
 
