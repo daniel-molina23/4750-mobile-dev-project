@@ -213,6 +213,8 @@ class FitnessDayFragment : Fragment(){
             R.id.profile_dropdown -> {
                 this.passData(FragmentToSwitchTo.PROFILE_EDITOR_FRAGMENT, FitnessDay()) //Switching to the Profile_editor_fragment
             }
+
+            /**The User Wants A Recycler View List Of all Its FitnessDays */
             R.id.list_view_dropdown -> {
                 Toast.makeText(context, "List View Drop Down!"
                     , Toast.LENGTH_SHORT).show()

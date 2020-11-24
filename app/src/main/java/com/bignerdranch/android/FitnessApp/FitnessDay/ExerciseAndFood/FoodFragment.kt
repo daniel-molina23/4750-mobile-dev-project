@@ -148,6 +148,8 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
         }
     }
 
+    /**Storing the User Information in the Data Base When the App Stops */
+
     override fun onStop() {
         super.onStop()
 
