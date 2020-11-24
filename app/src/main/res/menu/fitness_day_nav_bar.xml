@@ -11,8 +11,4 @@
         android:title="@string/list_view_descriptor"
         android:icon="@drawable/day_list_icon_dark"/>
 
-    <item
-        android:id="@+id/calendar_dropdown"
-        android:title="@string/new_calendar_day"
-        android:icon="@drawable/calendar_icon_dark"/>
 </menu>

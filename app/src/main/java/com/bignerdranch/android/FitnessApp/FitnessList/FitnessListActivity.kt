@@ -20,6 +20,7 @@ private const val TAG = "FitnessListActivity"
 
 class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks {
 
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -30,15 +31,20 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks {
         val currentFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_list_container)
 
-        if(currentFragment == null){
+        /**Starting the FitnessListFragment*/
+        if(currentFragment == null)
+        {
             val fragment = FitnessListFragment.newInstance()
 
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_list_container, fragment)
+                .addToBackStack(null) //Adding it to the BackStack So that it will return to the FitnessDayFragment After It Views What it needs to View
                 .commit()
         }//end if
     }
+
+    /**Might Need TO Delete This Method Since We Will Come Back To the FitnessDayFragment Therefore Do Not Need to Go to the FitnessDayActivity */
 
     override fun changeFitnessDayFragment(date: Date)
     {

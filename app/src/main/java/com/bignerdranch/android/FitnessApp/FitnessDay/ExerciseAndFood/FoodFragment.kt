@@ -99,12 +99,12 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
               this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
           }
+
           else{
               Toast.makeText(context, "Please Enter Valid Data\n"
                       + "1 or more fields are incorrect!"
                   , Toast.LENGTH_SHORT).show()
           }
-
         }
 
         if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
@@ -147,6 +147,8 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
                 , Toast.LENGTH_SHORT).show()
         }
     }
+
+    /**Storing the User Information in the Data Base When the App Stops */
 
     override fun onStop() {
         super.onStop()
