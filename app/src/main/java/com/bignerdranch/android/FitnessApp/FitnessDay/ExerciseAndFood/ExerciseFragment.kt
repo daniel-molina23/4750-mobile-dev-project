@@ -95,40 +95,56 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
 
         //Switching Back to the FitnessDayFragment
         this.mainMenuButton.setOnClickListener { view ->
-            if(numericRegex.matches(cardioEditText.text) &&
-                numericRegex.matches(weightTrainEditText.text)){
-
+            if(ensureProperCalorieInput())
                 this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
-            }
-            else{
-                Toast.makeText(context, "Please Enter Valid Data\n"
-                        + "1 or more fields are incorrect!"
-                    , Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
-    private fun ensureProperCalorieInput(){
+    private fun ensureProperCalorieInput(): Boolean{
         var invalidCount = 0
-        cardioText = if(numericRegex.matches(cardioEditText.text)){
-            cardioEditText.text.toString()
-        } else{
-            invalidCount ++
-            "0"
+        var invalidFields = mutableListOf<String>()
+        var index = 0
+
+        if(!numericRegex.matches(weightTrainEditText.text) && weightTrainEditText.text.toString() != "") {
+            invalidCount++
+            invalidFields.add("Weight Field")
         }
 
-        weightText = if(numericRegex.matches(weightTrainEditText.text)){
+        weightText = if(numericRegex.matches(weightTrainEditText.text))
             weightTrainEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (weightTrainEditText.text.toString() == "")
             "0"
+        else
+            fitnessDay.exerciseCalories.getValue("weight").toString()
+
+        if(!numericRegex.matches(cardioEditText.text) && cardioEditText.text.toString() != "") {
+            invalidCount++
+            invalidFields.add("Cardio Field")
         }
 
-        if(invalidCount > 0) {
-            Toast.makeText(context, "1 or more fields defaulted to \"0\"\n"
-                    + "Please go back and enter correctly!"
-                , Toast.LENGTH_SHORT).show()
+
+        cardioText = if(numericRegex.matches(cardioEditText.text))
+            cardioEditText.text.toString()
+        else if (cardioEditText.text.toString() == "")
+            "0"
+        else
+            fitnessDay.exerciseCalories.getValue("cardio").toString()
+
+
+        if(invalidCount >0) {
+            var fieldError = ""
+            var comma = ""
+            for(field in invalidFields){
+                fieldError += comma + field
+                comma = ", "
+            }
+
+            Toast.makeText(context, "Invalid fields: " + fieldError + ".\n"
+                    + "Please check those inputs.", Toast.LENGTH_LONG).show()
+            return false
         }
+        return true
+
     }
 
     override fun onStop() {

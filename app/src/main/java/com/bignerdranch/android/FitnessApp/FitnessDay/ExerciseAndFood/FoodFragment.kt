@@ -112,7 +112,6 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     private fun ensureProperCalorieInput(): Boolean{
         var invalidCount = 0
         var invalidFields = mutableListOf<String>()
-        var index = 0
 
         if(!numericRegex.matches(breakfastEditText.text) && breakfastEditText.text.toString() != "") {
             invalidCount++
