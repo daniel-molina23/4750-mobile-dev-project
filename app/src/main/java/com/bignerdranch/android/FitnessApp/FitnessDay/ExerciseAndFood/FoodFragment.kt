@@ -89,24 +89,14 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
     override fun onStart() {
         super.onStart()
-        Log.d("FOOD_FRAGMENT", "Enters the on start")
 
         //Switching Back to the FitnessDayFragment
         this.menuButton.setOnClickListener { view ->
-          if(numericRegex.matches(breakfastEditText.text) &&
-              numericRegex.matches(lunchEditText.text) &&
-              numericRegex.matches(dinnerEditText.text)){
-
-              this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
-          }
-
-          else{
-              Toast.makeText(context, "Please Enter Valid Data\n"
-                      + "1 or more fields are incorrect!"
-                  , Toast.LENGTH_SHORT).show()
-          }
+            this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
         }
 
+
+        // Loads text fields with data from database
         if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
             if(fitnessDay.foodCalories.getValue("breakfast") != 0)
                 breakfastEditText.setText(fitnessDay.foodCalories.getValue("breakfast").toString())
@@ -120,29 +110,42 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
     private fun ensureProperCalorieInput(){
         var invalidCount = 0
-        breakfastText = if(numericRegex.matches(breakfastEditText.text)){
+
+        if(!numericRegex.matches(breakfastEditText.text) && breakfastEditText.text.toString() != "")
+            invalidCount++
+
+        breakfastText = if(numericRegex.matches(breakfastEditText.text))
             breakfastEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (breakfastEditText.text.toString() == "")
             "0"
-        }
+        else
+            fitnessDay.foodCalories.getValue("breakfast").toString()
 
-        lunchText = if(numericRegex.matches(lunchEditText.text)){
+        if(!numericRegex.matches(lunchEditText.text) && lunchEditText.text.toString() != "")
+            invalidCount++
+
+
+        lunchText = if(numericRegex.matches(lunchEditText.text))
             lunchEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (lunchEditText.text.toString() == "")
             "0"
-        }
+        else
+            fitnessDay.foodCalories.getValue("lunch").toString()
 
-        dinnerText = if(numericRegex.matches(dinnerEditText.text)){
+
+        if(!numericRegex.matches(dinnerEditText.text) && dinnerEditText.text.toString() != "")
+            invalidCount++
+
+        dinnerText = if(numericRegex.matches(dinnerEditText.text))
             dinnerEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (dinnerEditText.text.toString() == "")
             "0"
-        }
+        else
+            fitnessDay.foodCalories.getValue("dinner").toString()
+
 
         if(invalidCount > 0) {
-            Toast.makeText(context, "1 or more fields defaulted to \"0\"\n"
+            Toast.makeText(context, "1 or more fields defaulted to original values\n"
                 + "Please go back and enter correctly!"
                 , Toast.LENGTH_SHORT).show()
         }
