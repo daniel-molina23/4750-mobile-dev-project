@@ -92,6 +92,8 @@ class FitnessDayFragment : Fragment(){
         fitnessViewModel.loadFitnessDay(date)
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -216,9 +218,7 @@ class FitnessDayFragment : Fragment(){
 
             /**The User Wants A Recycler View List Of all Its FitnessDays */
             R.id.list_view_dropdown -> {
-                Toast.makeText(context, "List View Drop Down!"
-                    , Toast.LENGTH_SHORT).show()
-
+                //Switching to The FitnessListActivity Which Is The container Class For the FitnessListFragment
                 val intent = Intent(activity, FitnessListActivity::class.java)
                 startActivity(intent)
             }

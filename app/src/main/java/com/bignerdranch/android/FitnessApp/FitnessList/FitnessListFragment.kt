@@ -21,6 +21,10 @@ import com.bignerdranch.android.FitnessApp.R
 
 private const val TAG = "FitnessListFragment"
 
+/**
+ * This Fragment Is Responsible For Displaying All the FitnessDays in the Data base in a Recycler View
+ * */
+
 class FitnessListFragment : Fragment() {
     //interface for hosting activities
     interface Callbacks{
@@ -29,6 +33,7 @@ class FitnessListFragment : Fragment() {
 
     private var callbacks: Callbacks? = null
 
+    //Recycler View Which Is Used to Hold all the FitnessDay Items
     private lateinit var fitnessDayRecyclerView: RecyclerView
 
     //adapter added for the class
@@ -51,11 +56,15 @@ class FitnessListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        //Associating the Layout for this Fragment
         val view = inflater.inflate(R.layout.fitness_list_fragment, container, false)
 
+        //Finding the Recycler View
         fitnessDayRecyclerView =
             view.findViewById(R.id.days_list_recycler_view) as RecyclerView
 
+        //Every Recycler View Needs A LayoutManager As Soon as its Created
+        //The layout manager positions every item and also defines how scrolling works
         fitnessDayRecyclerView.layoutManager = LinearLayoutManager(context)
 
         //hooking up the adapter to see the holders or list of items
