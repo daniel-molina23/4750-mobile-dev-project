@@ -95,8 +95,14 @@ class ExerciseFragment(fitnessDay: FitnessDay) : Fragment()
 
         //Switching Back to the FitnessDayFragment
         this.mainMenuButton.setOnClickListener { view ->
+//            if(ensureProperCalorieInput())
+//                this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+
+            /**
+             * Pop from backstack (delete this fragment and go to previous, aka FitnessDayFragment)
+             */
             if(ensureProperCalorieInput())
-                this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+                fragmentManager!!.popBackStack()
         }
     }
 
