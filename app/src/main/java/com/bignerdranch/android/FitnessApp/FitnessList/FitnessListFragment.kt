@@ -16,6 +16,7 @@ import java.util.*
 import androidx.lifecycle.Observer
 import com.bignerdranch.android.FitnessApp.FitnessDay.FitnessDayViewModel
 import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
+import com.bignerdranch.android.FitnessApp.Profile.ProfileManager
 import com.bignerdranch.android.FitnessApp.R
 
 
@@ -39,7 +40,7 @@ class FitnessListFragment : Fragment() {
     //adapter added for the class
     private var adapter : FitnessDayAdapter? = FitnessDayAdapter(emptyList())
 
-    // Added to create the livedata observer under onViewCreated
+    // Added to create the live data observer under onViewCreated
     private val fitnessViewModel: FitnessDayViewModel by lazy {
         ViewModelProvider(this).get(FitnessDayViewModel::class.java)
     }
@@ -115,11 +116,16 @@ class FitnessListFragment : Fragment() {
         fun bind(fitnessDay: FitnessDay){
             this.fitnessDay = fitnessDay
 
-            dateTextView.text = fitnessDay.date.toString() //Date instance
+            //calculate the remaining calories (BMR - FOOD + EXERCISE)
+            var remainingCalories : Int = ProfileManager.getBMR(context!!)
+            - fitnessDay.foodCalories.computeTotalCalories() + fitnessDay.exerciseCalories.computeTotalCalories()
 
-            calorieTextView.text = fitnessDay.foodCalories.toString() //numeric value
+            //This needs to be in the format xx/xx/xxxx
+            //dateTextView.text = fitnessDay.date.toString() //Date instance
+            calorieTextView.text = remainingCalories.toString() //numeric value
 
             //Depending if they have inputted any foods then we will show the image
+            //Should be fixed with database fix
             foodAddedImageView.visibility = if (fitnessDay.foodCalories.computeTotalCalories() > 0) {
                 View.VISIBLE
             } else{
@@ -130,8 +136,7 @@ class FitnessListFragment : Fragment() {
             {
                 View.VISIBLE
             }
-            else
-            {
+            else {
                 View.GONE
             }
         }
