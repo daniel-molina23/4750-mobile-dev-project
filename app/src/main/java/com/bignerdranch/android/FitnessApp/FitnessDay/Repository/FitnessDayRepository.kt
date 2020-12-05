@@ -32,6 +32,14 @@ class FitnessDayRepository private constructor(context: Context) {
         }
     }
 
+    fun exists(date: Date): Boolean{
+        var dateExistence = false
+        executor.execute{
+            dateExistence = fitnessDao.exists(date)
+        }
+        return dateExistence
+    }
+
     //Adds a FitnessDay to the Database On a background thread
     fun addFitnessDay(fitnessDay: FitnessDay){
         executor.execute {

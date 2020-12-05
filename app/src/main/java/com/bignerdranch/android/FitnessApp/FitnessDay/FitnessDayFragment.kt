@@ -137,7 +137,7 @@ class FitnessDayFragment : Fragment(){
         return view
     }
 
-    fun getRemainingCaloriesString() : String{
+    private fun getRemainingCaloriesString() : String{
         val food = Integer.valueOf(foodCalorieCount.text.toString())
         val exercise = Integer.valueOf(exerciseCalorieCount.text.toString())
         val finalValue = ProfileManager.getBMR(context!!) - food + exercise

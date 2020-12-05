@@ -106,14 +106,8 @@ class FitnessDayActivity : AppCompatActivity(), FitnessDayFragment.Callbacks, On
         //Switching to the FitnessDay Fragment (Needed For Main Menu Button)
         else if (this.fragmentToSwtichTo == FragmentToSwitchTo.FITNESS_DAY_FRAGMENT)
         {
-            val currentGregorianDate = GregorianCalendar.getInstance().time
             changeFitnessDayFragment(fitnessDay.date)
         }
 
     }
-
-
-
-
-
 }

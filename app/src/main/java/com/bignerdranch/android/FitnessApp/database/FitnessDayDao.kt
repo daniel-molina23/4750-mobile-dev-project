@@ -20,6 +20,9 @@ interface FitnessDayDao {
     @Query("SELECT * FROM FitnessDay WHERE date=(:date)")
     fun getFitnessDay(date: Date): LiveData<FitnessDay?>    //LiveData<null>
 
+    /**determines if a item is in the data base or not based on the boolean value*/
+    @Query("SELECT EXISTS (SELECT 1 FROM FitnessDay WHERE date=(:date))")
+    fun exists(date: Date): Boolean
 
     @Update
     fun updateFitnessDay(fitnessDay: FitnessDay)
