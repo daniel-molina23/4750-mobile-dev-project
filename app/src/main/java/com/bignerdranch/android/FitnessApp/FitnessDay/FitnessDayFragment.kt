@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.bignerdranch.android.FitnessApp.FitnessList.FitnessListActivity
 import com.bignerdranch.android.FitnessApp.Profile.ProfileManager
 import java.util.*
 
+private const val TAG = "FitnessDayFragment"
 private const val FITNESS_ID = "fitness_id"
 private const val ARG_FITNESS_DATE = "fitness_date"
 private const val DIALOG_DATE = "DialogDate"
@@ -83,16 +85,22 @@ class FitnessDayFragment : Fragment(){
         val time = arguments?.getLong(ARG_FITNESS_DATE)!!
         val date = Date(time)
 
-        //if date not present, add new day to database
-        if(!fitnessViewModel.isDatePresent(date)){
-            fitnessViewModel.addFitnessDay(fitnessDay)
+        if (!dateEquals(date, fitnessDay.date)){
+            //different date than today
+            fitnessDay.date = date
         }
+
+        //If date does not exist, then add to database on the same thread!
+        fitnessViewModel.checkIfExistsIfNotAdd(fitnessDay)
 
         //load the current date
         fitnessViewModel.loadFitnessDay(date)
     }
 
-
+    private fun dateEquals(d1: Date, d2: Date) : Boolean{
+        //true: if year, month and day are equal!!
+        return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -137,7 +145,7 @@ class FitnessDayFragment : Fragment(){
         return view
     }
 
-    fun getRemainingCaloriesString() : String{
+    private fun getRemainingCaloriesString() : String{
         val food = Integer.valueOf(foodCalorieCount.text.toString())
         val exercise = Integer.valueOf(exerciseCalorieCount.text.toString())
         val finalValue = ProfileManager.getBMR(context!!) - food + exercise
