@@ -24,14 +24,6 @@ class FitnessDayViewModel : ViewModel() {
 
     val fitnessDayLiveDataList = fitnessDayRepository.getFitnessDays()
 
-    //Getting the FitnessDay Live Data For the Specified FitnessDay Object
-    fun dateIsPresent(date: Date) : Boolean {
-        //checking on executor thread
-        return fitnessDayRepository.exists(date)
-        //first try wasn't so successful
-//        return fitnessDayRepository.getFitnessDay(date).value != null //Returning the LiveData
-    }
-
     fun checkIfExistsIfNotAdd(fitnessDay: FitnessDay) {
         //adds entry on separate thread
         fitnessDayRepository.checkIfExistsAndAdd(fitnessDay)

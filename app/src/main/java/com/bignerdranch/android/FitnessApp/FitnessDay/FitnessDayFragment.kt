@@ -90,14 +90,7 @@ class FitnessDayFragment : Fragment(){
             fitnessDay.date = date
         }
 
-//        //if date not present, add new day to database
-//        if(!fitnessViewModel.dateIsPresent(date)){
-//            Log.i(TAG, "Trying to add a new Date to Database******")
-//            fitnessViewModel.addFitnessDay(fitnessDay)
-//        }else{
-//            Log.i(TAG, "The Database checker works! Date IS PRESENT!")
-//        }
-
+        //If date does not exist, then add to database on the same thread!
         fitnessViewModel.checkIfExistsIfNotAdd(fitnessDay)
 
         //load the current date

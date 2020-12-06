@@ -34,18 +34,10 @@ class FitnessDayRepository private constructor(context: Context) {
         }
     }
 
-    fun exists(date: Date): Boolean{
-        var dateExistence = 0
-        executor.execute{
-            dateExistence = fitnessDao.exists(date)
-        }
-        return dateExistence == 1
-    }
-
     fun checkIfExistsAndAdd(fitnessDay: FitnessDay){
         executor.execute{
-            val dateExists = fitnessDao.exists(fitnessDay.date) == 1
-            if(!dateExists) {
+            val dateNotExists = fitnessDao.exists(fitnessDay.date) == 1
+            if(dateNotExists) {
                 Log.i(TAG, "***Trying to add a new Date to Database***")
                 fitnessDao.addFitnessDay(fitnessDay)
             }else{
