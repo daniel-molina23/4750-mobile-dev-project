@@ -22,7 +22,7 @@ interface FitnessDayDao {
 
     /**determines if a item is in the data base or not based on the boolean value*/
     @Query("SELECT EXISTS (SELECT 1 FROM FitnessDay WHERE date=(:date))")
-    fun exists(date: Date): Boolean
+    fun exists(date: Date): Int
 
     @Update
     fun updateFitnessDay(fitnessDay: FitnessDay)
