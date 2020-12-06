@@ -39,7 +39,6 @@ class FitnessListActivity : AppCompatActivity(), FitnessListFragment.Callbacks {
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_list_container, fragment)
-                .addToBackStack(null) //Adding it to the BackStack So that it will return to the FitnessDayFragment After It Views What it needs to View
                 .commit()
         }//end if
     }
