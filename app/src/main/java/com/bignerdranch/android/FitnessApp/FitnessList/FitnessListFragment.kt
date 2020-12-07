@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 
 
 private const val TAG = "FitnessListFragment"
-private const val DATE_FORMAT = "mm/dd/yyyy"
+private const val DATE_FORMAT = "MM/dd/yyyy"
 
 
 /**
@@ -76,6 +76,9 @@ class FitnessListFragment : Fragment() {
         //hooking up the adapter to see the holders or list of items
         fitnessDayRecyclerView.adapter = adapter
         return view
+
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,6 +104,9 @@ class FitnessListFragment : Fragment() {
         super.onDetach()
         callbacks = null
     }
+
+
+
 
     private inner class FitnessDayHolder(view : View) :RecyclerView.ViewHolder(view),
             View.OnClickListener{
