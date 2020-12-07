@@ -18,9 +18,12 @@ import com.bignerdranch.android.FitnessApp.FitnessDay.FitnessDayViewModel
 import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
 import com.bignerdranch.android.FitnessApp.Profile.ProfileManager
 import com.bignerdranch.android.FitnessApp.R
+import java.text.SimpleDateFormat
 
 
 private const val TAG = "FitnessListFragment"
+private const val DATE_FORMAT = "mm/dd/yyyy"
+
 
 /**
  * This Fragment Is Responsible For Displaying All the FitnessDays in the Data base in a Recycler View
@@ -31,6 +34,8 @@ class FitnessListFragment : Fragment() {
     interface Callbacks{
         fun changeFitnessDayFragment(date: Date) //TODO - implement database to save fields
     }
+    //date formatter
+    private val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH)
 
     private var callbacks: Callbacks? = null
 
@@ -117,12 +122,12 @@ class FitnessListFragment : Fragment() {
             this.fitnessDay = fitnessDay
 
             //calculate the remaining calories (BMR - FOOD + EXERCISE)
-            var remainingCalories : Int = ProfileManager.getBMR(context!!)
-            - fitnessDay.foodCalories.computeTotalCalories() + fitnessDay.exerciseCalories.computeTotalCalories()
+            var remainingCalories : Int = (ProfileManager.getBMR(context!!) - fitnessDay.foodCalories.computeTotalCalories() + fitnessDay.exerciseCalories.computeTotalCalories())
+
+            calorieTextView.text = remainingCalories.toString() //numeric value
 
             //This needs to be in the format xx/xx/xxxx
-            //dateTextView.text = fitnessDay.date.toString() //Date instance
-            calorieTextView.text = remainingCalories.toString() //numeric value
+            dateTextView.text = dateFormatter.format(fitnessDay.date) //Date instance
 
             //Depending if they have inputted any foods then we will show the image
             //Should be fixed with database fix
