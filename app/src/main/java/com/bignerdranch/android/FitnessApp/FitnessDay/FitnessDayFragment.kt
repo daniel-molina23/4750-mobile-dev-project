@@ -236,6 +236,7 @@ class FitnessDayFragment : Fragment(){
                 //Switching to The FitnessListActivity Which Is The container Class For the FitnessListFragment
                 val intent = Intent(activity, FitnessListActivity::class.java)
                 startActivity(intent)
+                activity?.finish() /**Killing The Hosting Activity So that this fragment is deleted  */
             }
         }
         return true
