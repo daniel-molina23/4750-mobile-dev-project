@@ -1,6 +1,7 @@
 package com.bignerdranch.android.FitnessApp.FitnessDay.Repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignerdranch.android.FitnessApp.FitnessDay.data.FitnessDay
@@ -9,6 +10,7 @@ import java.lang.IllegalStateException
 import java.util.*
 import java.util.concurrent.Executors
 
+private const val TAG = "FitnessDayRepository"
 private const val DATABASE_NAME = "fitnessday-database"
 
 class FitnessDayRepository private constructor(context: Context) {
@@ -29,6 +31,18 @@ class FitnessDayRepository private constructor(context: Context) {
     fun updateFitnessDay(fitnessDay: FitnessDay){
         executor.execute {
             fitnessDao.updateFitnessDay(fitnessDay)
+        }
+    }
+
+    fun checkIfExistsAndAdd(fitnessDay: FitnessDay){
+        executor.execute{
+            val dateNotExists = fitnessDao.exists(fitnessDay.date) == 1
+            if(dateNotExists) {
+                Log.i(TAG, "***Trying to add a new Date to Database***")
+                fitnessDao.addFitnessDay(fitnessDay)
+            }else{
+                Log.i(TAG, "***Already in Database!***")
+            }
         }
     }
 

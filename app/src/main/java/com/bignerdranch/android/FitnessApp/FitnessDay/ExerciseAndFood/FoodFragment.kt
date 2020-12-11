@@ -89,24 +89,20 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
 
     override fun onStart() {
         super.onStart()
-        Log.d("FOOD_FRAGMENT", "Enters the on start")
 
         //Switching Back to the FitnessDayFragment
         this.menuButton.setOnClickListener { view ->
-          if(numericRegex.matches(breakfastEditText.text) &&
-              numericRegex.matches(lunchEditText.text) &&
-              numericRegex.matches(dinnerEditText.text)){
-
-              this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
-          }
-
-          else{
-              Toast.makeText(context, "Please Enter Valid Data\n"
-                      + "1 or more fields are incorrect!"
-                  , Toast.LENGTH_SHORT).show()
-          }
+//            if(ensureProperCalorieInput())
+//                this.passData(FragmentToSwitchTo.FITNESS_DAY_FRAGMENT, fitnessDay)
+            /**
+             * Pop from backstack (delete this fragment and go to previous, aka FitnessDayFragment)
+             */
+            if(ensureProperCalorieInput())
+                fragmentManager!!.popBackStack()
         }
 
+
+        // Loads text fields with data from database
         if(fitnessDay.foodCalories.computeTotalCalories() != 0) {
             if(fitnessDay.foodCalories.getValue("breakfast") != 0)
                 breakfastEditText.setText(fitnessDay.foodCalories.getValue("breakfast").toString())
@@ -118,34 +114,61 @@ class FoodFragment(fitnessDay: FitnessDay) : Fragment()
     }
 
 
-    private fun ensureProperCalorieInput(){
+    private fun ensureProperCalorieInput(): Boolean{
         var invalidCount = 0
-        breakfastText = if(numericRegex.matches(breakfastEditText.text)){
+        var invalidFields = mutableListOf<String>()
+
+        if(!numericRegex.matches(breakfastEditText.text) && breakfastEditText.text.toString() != "") {
+            invalidCount++
+            invalidFields.add("Breakfast Field")
+        }
+
+        breakfastText = if(numericRegex.matches(breakfastEditText.text))
             breakfastEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (breakfastEditText.text.toString() == "")
             "0"
+        else
+            fitnessDay.foodCalories.getValue("breakfast").toString()
+
+        if(!numericRegex.matches(lunchEditText.text) && lunchEditText.text.toString() != "") {
+            invalidCount++
+            invalidFields.add("Lunch Field")
         }
 
-        lunchText = if(numericRegex.matches(lunchEditText.text)){
+
+        lunchText = if(numericRegex.matches(lunchEditText.text))
             lunchEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (lunchEditText.text.toString() == "")
             "0"
+        else
+            fitnessDay.foodCalories.getValue("lunch").toString()
+
+
+        if(!numericRegex.matches(dinnerEditText.text) && dinnerEditText.text.toString() != "") {
+            invalidCount++
+            invalidFields.add("Dinner Field")
         }
 
-        dinnerText = if(numericRegex.matches(dinnerEditText.text)){
+        dinnerText = if(numericRegex.matches(dinnerEditText.text))
             dinnerEditText.text.toString()
-        } else{
-            invalidCount ++
+        else if (dinnerEditText.text.toString() == "")
             "0"
-        }
+        else
+            fitnessDay.foodCalories.getValue("dinner").toString()
+        if(invalidCount >0) {
+            var fieldError = ""
+            var comma = ""
+            for(field in invalidFields){
+                fieldError += comma + field
+                comma = ", "
+            }
 
-        if(invalidCount > 0) {
-            Toast.makeText(context, "1 or more fields defaulted to \"0\"\n"
-                + "Please go back and enter correctly!"
-                , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Invalid fields: " + fieldError + ".\n"
+             + "Please check those inputs.", Toast.LENGTH_LONG).show()
+            return false
         }
+        return true
+
     }
 
     /**Storing the User Information in the Data Base When the App Stops */
